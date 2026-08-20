@@ -53,5 +53,5 @@ enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
 
 int is_equal(float a, float b)
 {
-    return abs(a - b) <= EPSILON;
+    return fabs(a - b) <= EPSILON;
 }

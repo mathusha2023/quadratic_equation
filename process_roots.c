@@ -5,7 +5,7 @@
 
 static float normilize_zero(float x)
 {
-    return abs(x) < 1e-8 ? 0.0 : x;
+    return fabs(x) < 1e-8 ? 0.0 : x;
 }
 
 void process_roots_with_print(struct QuadraticEquation *equation)
