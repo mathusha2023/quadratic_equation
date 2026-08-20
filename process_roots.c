@@ -1,6 +1,12 @@
 #include <stdio.h>
+#include <math.h>
 #include "solve_equation.h"
 #include "process_roots.h"
+
+static float normilize_zero(float x)
+{
+    return abs(x) < 1e-8 ? 0.0 : x;
+}
 
 void process_roots_with_print(struct QuadraticEquation *equation)
 {
@@ -13,10 +19,10 @@ void process_roots_with_print(struct QuadraticEquation *equation)
         printf("No solutions\n");
         break;
     case ONE_REAL_ROOT:
-        printf("x = %f\n", equation->x1);
+        printf("x = %f\n", normilize_zero(equation->x1));
         break;
     case TWO_REAL_ROOTS:
-        printf("x1 = %f, x2 = %f\n", equation->x1, equation->x2);
+        printf("x1 = %f, x2 = %f\n", normilize_zero(equation->x1), normilize_zero(equation->x2));
         break;
     default:
         printf("Error:(\n");
