@@ -1,3 +1,5 @@
-void get_coeffs_in_loop(float *pa, float *pb, float *pc, int (*pfunction)(float *pa, float *pb, float *pc));
-int get_coeffs(float *a, float *b, float *c);
-int get_coeffs_from_equation(float *pa, float *pb, float *pc);
+#include "solve_equation.h"
+
+void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(struct QuadraticEquation *equation));
+int get_coeffs(struct QuadraticEquation *equation);
+int get_coeffs_from_equation(struct QuadraticEquation *equation);

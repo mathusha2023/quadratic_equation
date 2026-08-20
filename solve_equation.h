@@ -2,7 +2,7 @@
 
 #define SOLVE_EQUATION_H
 
-enum roots_count
+enum RootsCount
 {
     INFINITY_ROOTS = -1,
     NO_REAL_ROOTS = 0,
@@ -10,8 +10,18 @@ enum roots_count
     TWO_REAL_ROOTS = 2
 };
 
-int is_equal(float a, float b);
-enum roots_count solve_quadratic_equation(float a, float b, float c, float *px1, float *px2);
-enum roots_count solve_linear_equation(float b, float c, float *px);
+struct QuadraticEquation
+{
+    float a;
+    float b;
+    float c;
+    float x1;
+    float x2;
+    enum RootsCount n_roots;
+};
 
-#endif
+int is_equal(float a, float b);
+enum RootsCount solve_QuadraticEquation(struct QuadraticEquation *equation);
+enum RootsCount solve_linear_equation(struct QuadraticEquation *equation);
+
+#endif // SOLVE_EQUATION_H

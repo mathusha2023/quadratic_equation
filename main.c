@@ -5,15 +5,11 @@
 
 int main(void)
 {
-    float a = 0, b = 0, c = 0;
+    struct QuadraticEquation equation = {0, 0, 0, 0, 0, NO_REAL_ROOTS};
 
-    get_coeffs_in_loop(&a, &b, &c, &get_coeffs);
-
-    float x1 = 0, x2 = 0;
-
-    enum roots_count n_roots = solve_quadratic_equation(a, b, c, &x1, &x2);
-
-    process_roots_with_print(n_roots, x1, x2);
+    get_coeffs_in_loop(&equation, &get_coeffs);
+    solve_QuadraticEquation(&equation);
+    process_roots_with_print(&equation);
 
     return 0;
 }

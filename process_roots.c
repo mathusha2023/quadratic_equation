@@ -2,9 +2,9 @@
 #include "solve_equation.h"
 #include "process_roots.h"
 
-void process_roots_with_print(enum roots_count n_roots, float x1, float x2)
+void process_roots_with_print(struct QuadraticEquation *equation)
 {
-    switch (n_roots)
+    switch (equation->n_roots)
     {
     case INFINITY_ROOTS:
         printf("Any number is solution\n");
@@ -13,10 +13,10 @@ void process_roots_with_print(enum roots_count n_roots, float x1, float x2)
         printf("No solutions\n");
         break;
     case ONE_REAL_ROOT:
-        printf("x = %f\n", x1);
+        printf("x = %f\n", equation->x1);
         break;
     case TWO_REAL_ROOTS:
-        printf("x1 = %f, x2 = %f\n", x1, x2);
+        printf("x1 = %f, x2 = %f\n", equation->x1, equation->x2);
         break;
     default:
         printf("Error:(\n");
