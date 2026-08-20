@@ -22,7 +22,7 @@ enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
     return equation->n_roots;
 }
 
-enum RootsCount solve_QuadraticEquation(struct QuadraticEquation *equation)
+enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
 {
     assert(equation != NULL);
     assert(isfinite(equation->a));
