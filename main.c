@@ -6,7 +6,8 @@ int main(void)
 {
     float a = 0, b = 0, c = 0;
 
-    if (!get_coeffs(&a, &b, &c))
+    // if (!get_coeffs(&a, &b, &c))
+    if (!get_coeffs_from_equation(&a, &b, &c))
     {
         printf("Enter correct coefficients!\n");
         return 1;
