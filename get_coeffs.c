@@ -1,5 +1,20 @@
 #include <stdio.h>
 
+void get_coeffs_in_loop(float *pa, float *pb, float *pc, int (*pfunction)(float *pa, float *pb, float *pc))
+{
+    int parsing_status = 0;
+
+    while (1)
+    {
+        parsing_status = (*pfunction)(pa, pb, pc);
+        if (parsing_status)
+            return;
+        while (getchar() != '\n')
+            ;
+        printf("Enter correct coefficients!\n\n");
+    }
+}
+
 int get_coeffs(float *pa, float *pb, float *pc)
 {
     printf("Enter coefficients\n");
