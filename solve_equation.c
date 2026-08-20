@@ -4,19 +4,19 @@
 #include "solve_equation.h"
 #include "config.h"
 
-int solve_linear_equation(float b, float c, float *px)
+enum roots_count solve_linear_equation(float b, float c, float *px)
 {
     assert(isfinite(b));
     assert(isfinite(c));
     assert(px != NULL);
 
     if (d_is_equal(b, 0.f))
-        return (d_is_equal(c, 0.f)) ? INFINITY_ROOTS : 0;
+        return (d_is_equal(c, 0.f)) ? INFINITY_ROOTS : NO_REAL_ROOTS;
     *px = -c / b;
-    return 1;
+    return ONE_REAL_ROOT;
 }
 
-int solve_quadratic_equation(float a, float b, float c, float *px1, float *px2)
+enum roots_count solve_quadratic_equation(float a, float b, float c, float *px1, float *px2)
 {
     assert(isfinite(a));
     assert(isfinite(b));
@@ -34,14 +34,14 @@ int solve_quadratic_equation(float a, float b, float c, float *px1, float *px2)
     {
         *px1 = (-b - sqrt(D)) / (2 * a);
         *px2 = (-b + sqrt(D)) / (2 * a);
-        return 2;
+        return TWO_REAL_ROOTS;
     }
     else if (d_is_equal(D, 0.f))
     {
         *px1 = -b / (2 * a);
-        return 1;
+        return ONE_REAL_ROOT;
     }
-    return 0;
+    return NO_REAL_ROOTS;
 }
 
 int is_equal(float a, float b)

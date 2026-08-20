@@ -11,7 +11,7 @@ int main(void)
 
     float x1 = 0, x2 = 0;
 
-    int n_roots = solve_quadratic_equation(a, b, c, &x1, &x2);
+    enum roots_count n_roots = solve_quadratic_equation(a, b, c, &x1, &x2);
 
     process_roots_with_print(n_roots, x1, x2);
 

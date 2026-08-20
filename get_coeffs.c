@@ -2,14 +2,14 @@
 
 void get_coeffs_in_loop(float *pa, float *pb, float *pc, int (*pfunction)(float *pa, float *pb, float *pc))
 {
-    int parsing_status = 0;
+    int parsing_status, c;
 
     while (1)
     {
         parsing_status = (*pfunction)(pa, pb, pc);
         if (parsing_status)
             return;
-        while (getchar() != '\n')
+        while ((c = getchar()) != '\n' && c != EOF)
             ;
         printf("Enter correct coefficients!\n\n");
     }
@@ -22,7 +22,7 @@ int get_coeffs(float *pa, float *pb, float *pc)
     printf("%%a %%b %%c\n");
 
     int res = scanf("%f %f %f", pa, pb, pc);
-    return res != 0 && res != EOF;
+    return res == 3;
 }
 
 int get_coeffs_from_equation(float *pa, float *pb, float *pc)
@@ -32,5 +32,5 @@ int get_coeffs_from_equation(float *pa, float *pb, float *pc)
     printf("Example: 2x2 + 10x + 7 = 0\n");
 
     int res = scanf("%fx2 + %fx + %f = 0", pa, pb, pc);
-    return res != 0 && res != EOF;
+    return res == 3;
 }
