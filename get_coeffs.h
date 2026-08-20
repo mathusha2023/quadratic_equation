@@ -1,0 +1,1 @@
+int get_coeffs(float *a, float *b, float *c);
