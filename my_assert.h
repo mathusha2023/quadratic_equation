@@ -1,8 +1,19 @@
 #ifndef MY_ASSERT_H
 #define MY_ASSERT_H
 
-#define my_assert(condition) _myassert(condition, __FILE__, __LINE__)
+#include <stdio.h>
+#include <stdlib.h>
 
-void _myassert(int condition, const char *file, int line);
+#define my_assert(condition)                               \
+    {                                                      \
+        if (!(condition))                                  \
+        {                                                  \
+            fprintf(stderr, "\x1b[31m"                     \
+                            "My asseration error: %s:%d\n" \
+                            "\x1b[0m",                     \
+                    __FILE__, __LINE__);                   \
+            exit(1);                                       \
+        }                                                  \
+    }
 
 #endif // MY_ASSERT_H

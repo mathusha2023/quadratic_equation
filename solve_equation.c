@@ -6,7 +6,7 @@
 
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
 {
-    my_assert(equation != NULL);
+    my_assert(equation);
     my_assert(isfinite(equation->b));
     my_assert(isfinite(equation->c));
 
@@ -24,7 +24,7 @@ enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
 
 enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
 {
-    my_assert(equation != NULL);
+    my_assert(equation);
     my_assert(isfinite(equation->a));
     my_assert(isfinite(equation->b));
     my_assert(isfinite(equation->c));
@@ -33,16 +33,16 @@ enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
         return solve_linear_equation(equation);
 
     float D = equation->b * equation->b - 4 * equation->a * equation->c;
-    if (D > 0)
+    if (d_is_equal(D, 0.f))
+    {
+        equation->x1 = -equation->b / (2 * equation->a);
+        equation->n_roots = ONE_REAL_ROOT;
+    }
+    else if (D > 0.f)
     {
         equation->x1 = (-equation->b - sqrt(D)) / (2 * equation->a);
         equation->x2 = (-equation->b + sqrt(D)) / (2 * equation->a);
         equation->n_roots = TWO_REAL_ROOTS;
-    }
-    else if (d_is_equal(D, 0.f))
-    {
-        equation->x1 = -equation->b / (2 * equation->a);
-        equation->n_roots = ONE_REAL_ROOT;
     }
     else
     {

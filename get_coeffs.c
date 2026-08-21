@@ -7,7 +7,7 @@
 
 void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(struct QuadraticEquation *equation))
 {
-    int parsing_status, c;
+    int parsing_status = 0, c = 0;
 
     while (1)
     {
