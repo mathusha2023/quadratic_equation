@@ -35,7 +35,16 @@ int get_coeffs(struct QuadraticEquation *equation)
     return res == 3 && isspace(c);
 }
 
-#define BUFFERSIZE 100
+int is_char_allowed(char c)
+{
+    size_t length = sizeof ALLOWED_CHARS / sizeof(char);
+    for (size_t i = 0; i < length; i++)
+    {
+        if (c == ALLOWED_CHARS[i])
+            return 1;
+    }
+    return 0;
+}
 
 int check_format_and_delete_whitespaces(char *s)
 {
@@ -44,7 +53,7 @@ int check_format_and_delete_whitespaces(char *s)
 
     for (i = j = 0; s[i]; i++)
     {
-        if (!isdigit(s[i]) && !isspace(s[i]) && tolower(s[i]) != 'x' && s[i] != '.' && s[i] != '^' && s[i] != '=' && s[i] != '+' && s[i] != '-')
+        if (!is_char_allowed(s[i]))
             return 0;
         if (!isspace(s[i]))
             s[j++] = (char)tolower(s[i]);
@@ -72,9 +81,7 @@ void find_full_coeffs(char *s)
     left[i++] = '\0';
 
     for (j = 0; s[i]; i++, j++)
-    {
         right[j] = s[i];
-    }
     right[j] = '\0';
 
     // realisation

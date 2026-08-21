@@ -22,7 +22,14 @@
 #endif // USE_COLORS
 // colors block end
 
-#define EPSILON 0.0001
+const size_t BUFFERSIZE = 100;
+const float EPSILON = 0.0001f;
+const char ALLOWED_CHARS[] = {
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    ' ', '\t', '\n', '\v', '\f', '\r',
+    'x',
+    'X',
+    '.', '^', '=', '+', '-'};
 #define d_is_equal(a, b) (fabs((a) - (b)) < EPSILON)
 
 #endif // CONFIG_H
