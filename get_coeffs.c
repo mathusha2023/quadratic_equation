@@ -46,6 +46,20 @@ int is_char_allowed(char c)
     return 0;
 }
 
+int has_disallow_sequences(char *s)
+{
+    const char *arr[] = {"+-", "-+", "--", "++"};
+    const size_t length = sizeof arr / sizeof(arr[0]);
+    size_t i = 0;
+
+    for (i = 0; i < length; i++)
+    {
+        if (strstr(s, arr[i]))
+            return 1;
+    }
+    return 0;
+}
+
 int check_format_and_delete_whitespaces(char *s)
 {
     int i = 0, j = 0;
@@ -61,12 +75,75 @@ int check_format_and_delete_whitespaces(char *s)
             count += 1;
     }
     s[j] = '\0';
-    return count == 1;
+    return count == 1 && !has_disallow_sequences(s);
 }
 
-void find_full_coeffs(char *s)
+// удаляет из строки символы с left включительно до right не включительно
+void delete_substr(char *s, size_t left, size_t right)
 {
-    int a = 0, b = 0, c = 0;
+    size_t i = 0, j = 0;
+    for (i = j = 0; s[i]; i++)
+    {
+        if (left <= i && i < right)
+            continue;
+        s[j++] = s[i];
+    }
+    s[j] = '\0';
+}
+
+float str_sum(char *s)
+{
+    float sum = 0;
+    while (*s)
+    {
+        sum += (float)strtod(s, &s);
+    }
+    return sum;
+}
+
+float find_one_coeff(char *s, const char *pat)
+{
+    float x = 0;
+    char *p = NULL;
+    size_t left = 0, right = 0;
+    size_t delta = strlen(pat);
+
+    while ((p = strstr(s, pat)))
+    {
+        left = right = (size_t)(p - s);
+        while (left != 0 && s[left - 1] != 'x' && s[left] != '+' && s[left] != '-')
+        {
+            left--;
+        }
+        if (right == 0)
+            x += 1;
+        else if (right - left == 1 && s[left] == '+')
+            x += 1;
+        else if (right - left == 1 && s[left] == '-')
+            x -= 1;
+        else
+            x += (float)strtod(s + left, NULL);
+        delete_substr(s, left, right + delta);
+    }
+    return x;
+}
+
+void find_part_coeffs(char *s, float *pa, float *pb, float *pc)
+{
+    *pa = *pb = *pc = 0;
+
+    *pa = find_one_coeff(s, "x^2");
+    *pb = find_one_coeff(s, "x");
+
+    // считаем с как сумму оставшихся чисел
+    *pc = str_sum(s);
+    printf("c = %f\n", *pc);
+}
+
+void find_full_coeffs(char *s, struct QuadraticEquation *equation)
+{
+    float a1 = 0, b1 = 0, c1 = 0;
+    float a2 = 0, b2 = 0, c2 = 0;
     char *peq = strstr(s, "=");
     my_assert(peq != NULL);
 
@@ -84,43 +161,24 @@ void find_full_coeffs(char *s)
         right[j] = s[i];
     right[j] = '\0';
 
-    // realisation
+    find_part_coeffs(left, &a1, &b1, &c1);
+    find_part_coeffs(right, &a2, &b2, &c2);
+    equation->a = a1 - a2;
+    equation->b = b1 - b2;
+    equation->c = c1 - c2;
 
     free(left);
     free(right);
-}
 
-void find_part_coeffs(char *s)
-{
-    char *p = NULL;
-    size_t left = 0, right = 0;
-
-    double a = 0, b = 0, c = 0;
-
-    while ((p = strstr(s, "x^2")) != NULL)
-    {
-        left = right = (size_t)(p - s);
-        while (left != 0 && s[left - 1] != 'x')
-        {
-            left--;
-        }
-        if (right == 0)
-            a += 1;
-        else
-        {
-            // a += (float)strtod();
-        }
-    }
+    printf("a = %f, b = %f, c = %f\n", equation->a, equation->b, equation->c);
 }
 
 int parse_coeffs_from_equation(struct QuadraticEquation *equation)
 {
-    printf("Enter your equation:\n");
+    printf(BLUE_C "Enter your equation:\n");
     printf("Format: ax^2 + bx + c = 0\n");
-    // printf("Note: valid input may be ax^2 + bx + c = dx^2 + fx + g\n");
-    printf("Your equation: ");
-
-    float a = 0, b = 0, c = 0;
+    printf("Note: valid input may be ax^2 + bx + c = dx^2 + fx + g\n");
+    printf("Your equation: " RESET_C);
 
     char s[BUFFERSIZE] = {};
     if (fgets(s, BUFFERSIZE, stdin) == NULL)
@@ -129,11 +187,11 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
 
     if (!check_format_and_delete_whitespaces(ps))
     {
-        ungetc('\n', stdin); // для работы функции с циклом
+        ungetc('\n', stdin); // для работы функции get_coeffs_in_loop
         return 0;
     }
 
-    find_full_coeffs(ps);
+    find_full_coeffs(ps, equation);
 
     return 1;
 }
