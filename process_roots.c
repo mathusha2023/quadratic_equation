@@ -1,7 +1,7 @@
+#include "process_roots.h"
 #include <stdio.h>
 #include <math.h>
 #include "solve_equation.h"
-#include "process_roots.h"
 
 static float normilize_zero(float x)
 {

@@ -1,7 +1,7 @@
+#include "solve_equation.h"
 #include <math.h>
 #include <stddef.h>
 #include <assert.h>
-#include "solve_equation.h"
 #include "config.h"
 
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)

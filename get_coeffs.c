@@ -1,3 +1,4 @@
+#include "get_coeffs.h"
 #include <stdio.h>
 #include <ctype.h>
 #include "solve_equation.h"
