@@ -1,14 +1,14 @@
 #include "solve_equation.h"
 #include <math.h>
 #include <stddef.h>
-#include <assert.h>
+#include "my_assert.h"
 #include "config.h"
 
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
 {
-    assert(equation != NULL);
-    assert(isfinite(equation->b));
-    assert(isfinite(equation->c));
+    my_assert(equation != NULL);
+    my_assert(isfinite(equation->b));
+    my_assert(isfinite(equation->c));
 
     if (d_is_equal(equation->b, 0.f))
     {
@@ -24,10 +24,10 @@ enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
 
 enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
 {
-    assert(equation != NULL);
-    assert(isfinite(equation->a));
-    assert(isfinite(equation->b));
-    assert(isfinite(equation->c));
+    my_assert(equation != NULL);
+    my_assert(isfinite(equation->a));
+    my_assert(isfinite(equation->b));
+    my_assert(isfinite(equation->c));
 
     if (d_is_equal(equation->a, 0.f))
         return solve_linear_equation(equation);
