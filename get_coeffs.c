@@ -8,7 +8,7 @@
 
 void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(struct QuadraticEquation *equation))
 {
-    int parsing_status, c;
+    int parsing_status = 0, c = 0;
 
     while (1)
     {
@@ -36,7 +36,7 @@ int get_coeffs(struct QuadraticEquation *equation)
 
 int check_format_and_delete_whitespaces(char *s)
 {
-    int i, j;
+    int i = 0, j = 0;
     int count = 0;
 
     for (i = j = 0; s[i]; i++)
@@ -74,6 +74,8 @@ void find_full_coeffs(char *s)
     }
     right[j] = '\0';
 
+    // realisation
+
     free(*left);
     free(*right);
 }
@@ -83,12 +85,20 @@ void find_part_coeffs(char *s)
     char *p = NULL;
     size_t left = 0, right = 0;
 
+    double a = 0, b = 0, c = 0;
+
     while ((p = strstr(s, "x^2")) != NULL)
     {
         left = right = (size_t)(p - s);
         while (left != 0 && s[left - 1] != 'x')
         {
             left--;
+        }
+        if (right == 0)
+            a += 1;
+        else
+        {
+            // a += (float)strtod();
         }
     }
 }
@@ -102,7 +112,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
 
     float a = 0, b = 0, c = 0;
 
-    char s[BUFFERSIZE];
+    char s[BUFFERSIZE] = {};
     if (fgets(s, BUFFERSIZE, stdin) == NULL)
         return 0;
     char *ps = s;
@@ -113,7 +123,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
         return 0;
     }
 
-    find_coeffs(ps);
+    find_full_coeffs(ps);
 
     return 1;
 }
