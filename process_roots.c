@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "solve_equation.h"
+#include "config.h"
 
 static float normilize_zero(float x)
 {
@@ -10,6 +11,7 @@ static float normilize_zero(float x)
 
 void process_roots_with_print(struct QuadraticEquation *equation)
 {
+    printf(GREEN_C);
     switch (equation->n_roots)
     {
     case INFINITY_ROOTS:
@@ -28,4 +30,5 @@ void process_roots_with_print(struct QuadraticEquation *equation)
         printf("Error:(\n");
         break;
     }
+    printf(RESET_C);
 }
