@@ -21,10 +21,10 @@ void process_roots_with_print(struct QuadraticEquation *equation)
         printf("No solutions\n");
         break;
     case ONE_REAL_ROOT:
-        printf("x = %f\n", normilize_zero(equation->x1));
+        printf("x = %lg\n", normilize_zero(equation->x1));
         break;
     case TWO_REAL_ROOTS:
-        printf("x1 = %f, x2 = %f\n", normilize_zero(equation->x1), normilize_zero(equation->x2));
+        printf("x1 = %lg, x2 = %lg\n", normilize_zero(equation->x1), normilize_zero(equation->x2));
         break;
     default:
         printf("Error:(\n");
