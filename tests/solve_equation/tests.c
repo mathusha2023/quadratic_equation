@@ -4,7 +4,7 @@
 #include "config.h"
 
 static const struct EquationTestCase test_cases[] = {
-    {1, {2, -5, 6, 3, 2, TWO_REAL_ROOTS}},       // x^2 - 5x + 6 = 0
+    {1, {1, -5, 6, 3, 2, TWO_REAL_ROOTS}},       // x^2 - 5x + 6 = 0
     {2, {1, -3, 2, 2, 1, TWO_REAL_ROOTS}},       // x^2 - 3x + 2 = 0
     {3, {2, -7, 3, 3, 0.5, TWO_REAL_ROOTS}},     // 2x^2 - 7x + 3 = 0
     {4, {1, 0, -1, 1, -1, TWO_REAL_ROOTS}},      // x^2 - 1 = 0
