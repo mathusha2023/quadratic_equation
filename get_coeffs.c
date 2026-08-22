@@ -91,19 +91,17 @@ void delete_substr(char *s, size_t left, size_t right)
     s[j] = '\0';
 }
 
-float str_sum(char *s)
+double str_sum(char *s)
 {
-    float sum = 0;
+    double sum = 0;
     while (*s)
-    {
-        sum += (float)strtod(s, &s);
-    }
+        sum += strtod(s, &s);
     return sum;
 }
 
-float find_one_coeff(char *s, const char *pat)
+double find_one_coeff(char *s, const char *pat)
 {
-    float x = 0;
+    double x = 0;
     char *p = NULL;
     size_t left = 0, right = 0;
     size_t delta = strlen(pat);
@@ -122,13 +120,13 @@ float find_one_coeff(char *s, const char *pat)
         else if (right - left == 1 && s[left] == '-')
             x -= 1;
         else
-            x += (float)strtod(s + left, NULL);
+            x += strtod(s + left, NULL);
         delete_substr(s, left, right + delta);
     }
     return x;
 }
 
-void find_part_coeffs(char *s, float *pa, float *pb, float *pc)
+void find_part_coeffs(char *s, double *pa, double *pb, double *pc)
 {
     *pa = *pb = *pc = 0;
 
@@ -137,21 +135,23 @@ void find_part_coeffs(char *s, float *pa, float *pb, float *pc)
 
     // считаем с как сумму оставшихся чисел
     *pc = str_sum(s);
-    printf("c = %f\n", *pc);
 }
 
-void find_full_coeffs(char *s, struct QuadraticEquation *equation)
+int find_full_coeffs(char *s, struct QuadraticEquation *equation)
 {
-    float a1 = 0, b1 = 0, c1 = 0;
-    float a2 = 0, b2 = 0, c2 = 0;
+    double a1 = 0, b1 = 0, c1 = 0;
+    double a2 = 0, b2 = 0, c2 = 0;
     char *peq = strstr(s, "=");
-    my_assert(peq != NULL);
+    my_assert(peq);
 
     size_t eq_ind = (size_t)(peq - s);
     size_t i = 0, j = 0;
 
     char *left = (char *)calloc(eq_ind + 1, sizeof(char));
     char *right = (char *)calloc(strlen(s) - eq_ind + 1, sizeof(char));
+
+    if (!left || !right)
+        return 0;
 
     for (i = 0; i < eq_ind; i++)
         left[i] = s[i];
@@ -170,7 +170,7 @@ void find_full_coeffs(char *s, struct QuadraticEquation *equation)
     free(left);
     free(right);
 
-    printf("a = %f, b = %f, c = %f\n", equation->a, equation->b, equation->c);
+    return 1;
 }
 
 int parse_coeffs_from_equation(struct QuadraticEquation *equation)
@@ -191,7 +191,5 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
         return 0;
     }
 
-    find_full_coeffs(ps, equation);
-
-    return 1;
+    return find_full_coeffs(ps, equation);
 }

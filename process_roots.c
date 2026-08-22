@@ -4,7 +4,7 @@
 #include "solve_equation.h"
 #include "config.h"
 
-static float normilize_zero(float x)
+static double normilize_zero(double x)
 {
     return fabs(x) < EPSILON ? 0.0 : x;
 }

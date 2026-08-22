@@ -12,15 +12,15 @@ enum RootsCount
 
 struct QuadraticEquation
 {
-    float a;
-    float b;
-    float c;
-    float x1;
-    float x2;
+    double a;
+    double b;
+    double c;
+    double x1;
+    double x2;
     enum RootsCount n_roots;
 };
 
-int is_equal(float a, float b);
+int is_equal(double a, double b);
 enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation);
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation);
 

@@ -23,7 +23,7 @@
 // colors block end
 
 const size_t BUFFERSIZE = 100;
-const float EPSILON = 0.0001f;
+const double EPSILON = 0.0001;
 const char ALLOWED_CHARS[] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     ' ', '\t', '\n', '\v', '\f', '\r',
