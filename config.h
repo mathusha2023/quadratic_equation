@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <math.h>
+
 // colors block
 #define USE_COLORS // comment this line to disable colors
 #define RESET_C "\x1b[0m"
@@ -23,7 +25,7 @@
 // colors block end
 
 const size_t BUFFERSIZE = 100;
-const double EPSILON = 0.0001;
+const double EPSILON = 1e-6;
 const char ALLOWED_CHARS[] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     ' ', '\t', '\n', '\v', '\f', '\r',

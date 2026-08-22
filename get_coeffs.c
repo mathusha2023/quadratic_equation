@@ -51,7 +51,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
 
     struct Parser parser = init_parser(s);
 
-    if (!parser.check_format(&parser))
+    if (!parser.check_format(&parser)) // формат строки не соответствует
     {
         ungetc('\n', stdin); // для работы функции get_coeffs_in_loop
         return 0;

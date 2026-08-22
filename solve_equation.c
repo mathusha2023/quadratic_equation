@@ -16,7 +16,7 @@ enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
     }
     else
     {
-        equation->x1 = -equation->c / equation->b;
+        equation->x1 = equation->x2 = -equation->c / equation->b;
         equation->n_roots = ONE_REAL_ROOT;
     }
     return equation->n_roots;
@@ -35,7 +35,7 @@ enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation)
     double D = equation->b * equation->b - 4 * equation->a * equation->c;
     if (d_is_equal(D, 0.))
     {
-        equation->x1 = -equation->b / (2 * equation->a);
+        equation->x1 = equation->x2 = -equation->b / (2 * equation->a);
         equation->n_roots = ONE_REAL_ROOT;
     }
     else if (D > 0.)

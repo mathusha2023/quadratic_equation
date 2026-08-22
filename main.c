@@ -2,9 +2,16 @@
 #include "get_coeffs.h"
 #include "solve_equation.h"
 #include "process_roots.h"
+#include "cmd_args.h"
+#include "tests/tests.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
+    struct CmdArgs args = get_args(argc, argv);
+
+    if (args.test && !runTests())
+        return (1);
+
     struct QuadraticEquation equation = {0, 0, 0, 0, 0, NO_REAL_ROOTS};
 
     get_coeffs_in_loop(&equation, &parse_coeffs_from_equation);
