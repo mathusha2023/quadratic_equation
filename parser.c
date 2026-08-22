@@ -37,6 +37,32 @@ static int ends_with(char *s, char c)
     return len && s[len - 1] == c;
 }
 
+static int is_end_char_allowed(char *s)
+{
+    const char allowed_chars[] = "1234567890x";
+    int i = 0;
+
+    for (i = 0; allowed_chars[i]; i++)
+    {
+        if (ends_with(s, allowed_chars[i]))
+            return 1;
+    }
+    return 0;
+}
+
+static int is_start_char_allowed(char *s)
+{
+    const char allowed_chars[] = "1234567890x+-";
+    int i = 0;
+
+    for (i = 0; allowed_chars[i]; i++)
+    {
+        if (s[0] == allowed_chars[i])
+            return 1;
+    }
+    return 0;
+}
+
 static int check_format(char *s)
 {
     int i = 0;
@@ -49,14 +75,8 @@ static int check_format(char *s)
         if (s[i] == '=')
             count += 1;
     }
-    // проверка что строка заканчивается цифрой или переменной
-    const char chars[] = "1234567890x";
-    for (i = 0; chars[i]; i++)
-    {
-        if (ends_with(s, chars[i]))
-            return count == 1 && !has_disallow_sequences(s) && s[0] != '=' && s[0] != '^' && s[0] != '.';
-    }
-    return 0;
+    return count == 1 && !has_disallow_sequences(s) &&
+           is_start_char_allowed(s) && is_end_char_allowed(s);
 }
 
 static void format_string(char *s)
