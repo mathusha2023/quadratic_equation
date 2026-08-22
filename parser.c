@@ -31,22 +31,43 @@ static int has_disallow_sequences(char *s)
     return 0;
 }
 
-static int check_format_and_delete_whitespaces(char *s)
+static int ends_with(char *s, char c)
 {
-    int i = 0, j = 0;
+    size_t len = strlen(s);
+    return len && s[len - 1] == c;
+}
+
+static int check_format(char *s)
+{
+    int i = 0;
     int count = 0;
 
-    for (i = j = 0; s[i]; i++)
+    for (i = 0; s[i]; i++)
     {
         if (!is_char_allowed(s[i]))
             return 0;
-        if (!isspace(s[i]))
-            s[j++] = (char)tolower(s[i]);
         if (s[i] == '=')
             count += 1;
     }
+    // проверка что строка заканчивается цифрой или переменной
+    const char chars[] = "1234567890x";
+    for (i = 0; chars[i]; i++)
+    {
+        if (ends_with(s, chars[i]))
+            return count == 1 && !has_disallow_sequences(s) && s[0] != '=' && s[0] != '^' && s[0] != '.';
+    }
+    return 0;
+}
+
+static void format_string(char *s)
+{
+    int i = 0, j = 0;
+    for (i = j = 0; s[i]; i++)
+    {
+        if (!isspace(s[i]))
+            s[j++] = (char)tolower(s[i]);
+    }
     s[j] = '\0';
-    return count == 1 && !has_disallow_sequences(s);
 }
 
 // удаляет из строки символы с left включительно до right не включительно
@@ -112,9 +133,12 @@ static void find_part_coeffs(char *s, double *pa, double *pb, double *pc)
 
 static int find_full_coeffs(char *s, struct QuadraticEquation *equation)
 {
+    my_assert(check_format(s));
+
     double a1 = 0, b1 = 0, c1 = 0;
     double a2 = 0, b2 = 0, c2 = 0;
     char *peq = strstr(s, "=");
+
     my_assert(peq);
 
     size_t eq_ind = (size_t)(peq - s);
@@ -148,12 +172,13 @@ static int find_full_coeffs(char *s, struct QuadraticEquation *equation)
 
 static int parse(struct Parser *parser, struct QuadraticEquation *equation)
 {
-    return find_full_coeffs(parser->s, equation);
+    return parser->is_correct_format && find_full_coeffs(parser->s, equation);
 }
 
 struct Parser init_parser(char *s)
 {
+    format_string(s);
     struct Parser parser = {s, 0, &parse};
-    parser.is_correct_format = check_format_and_delete_whitespaces(s);
+    parser.is_correct_format = check_format(s);
     return parser;
 }

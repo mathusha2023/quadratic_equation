@@ -106,13 +106,15 @@ int run_equation_tests(void)
     int passed = 0;
     int test_count = sizeof test_cases / sizeof(struct EquationTestCase);
 
+    printf("Start quadratic equations testing\n");
+
     for (int i = 0; i < test_count; i++)
         passed += run_test(test_cases[i]);
 
     int are_all_passed = passed == test_count;
 
     printf("End quadratic equations testing\n");
-    printf("%sPassed: %d/%d tests\n%s",
+    printf("%sPassed: %d/%d tests\n\n%s",
            are_all_passed ? "\x1b[32m" : "\x1b[31m",
            passed, test_count,
            "\x1b[0m");

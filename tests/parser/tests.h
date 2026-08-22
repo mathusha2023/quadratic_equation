@@ -3,7 +3,7 @@
 struct ParserTestCase
 {
     int num;
-    char *s;
+    const char *s;
     int is_correct_format;
     int is_correct_parse;
     struct QuadraticEquation equation;
