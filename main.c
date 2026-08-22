@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
 {
     struct CmdArgs args = get_args(argc, argv);
 
-    if (args.test && !runTests())
-        return (1);
+    if (args.test)
+        return !runTests();
 
     struct QuadraticEquation equation = {0, 0, 0, 0, 0, NO_REAL_ROOTS};
 
