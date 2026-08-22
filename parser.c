@@ -7,15 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int check_format(struct Parser *parser);
-static int parse(struct Parser *parser, struct QuadraticEquation *equation);
-
-struct Parser init_parser(char *s)
-{
-    struct Parser parser = {s, &check_format, &parse};
-    return parser;
-}
-
 static int is_char_allowed(char c)
 {
     size_t length = sizeof ALLOWED_CHARS / sizeof(char);
@@ -155,12 +146,14 @@ static int find_full_coeffs(char *s, struct QuadraticEquation *equation)
     return 1;
 }
 
-static int check_format(struct Parser *parser)
-{
-    return check_format_and_delete_whitespaces(parser->s);
-}
-
 static int parse(struct Parser *parser, struct QuadraticEquation *equation)
 {
     return find_full_coeffs(parser->s, equation);
+}
+
+struct Parser init_parser(char *s)
+{
+    struct Parser parser = {s, 0, &parse};
+    parser.is_correct_format = check_format_and_delete_whitespaces(s);
+    return parser;
 }

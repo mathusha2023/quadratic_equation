@@ -3,7 +3,7 @@
 struct Parser
 {
     char *s;
-    int (*check_format)(struct Parser *parser);
+    int is_correct_format;
     int (*parse)(struct Parser *parser, struct QuadraticEquation *equation);
 };
 

@@ -55,7 +55,9 @@ static const struct EquationTestCase test_cases[] = {
 
 static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *eq2)
 {
-    return eq1->n_roots == eq2->n_roots && ((d_is_equal(eq1->x1, eq2->x1) && d_is_equal(eq1->x2, eq2->x2)) || (d_is_equal(eq1->x1, eq2->x2) && d_is_equal(eq1->x2, eq2->x1)));
+    return eq1->n_roots == eq2->n_roots &&
+           ((d_is_equal(eq1->x1, eq2->x1) && d_is_equal(eq1->x2, eq2->x2)) ||
+            (d_is_equal(eq1->x1, eq2->x2) && d_is_equal(eq1->x2, eq2->x1)));
 }
 
 static const char *get_roots_count_str(enum RootsCount n_roots)
