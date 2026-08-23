@@ -52,6 +52,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
     struct FSMParser parser = init_fsmparser(s, equation);
 
     char *c = parser.parse(&parser);
+    print_fsmparser(&parser);
 
     if (c)
     {

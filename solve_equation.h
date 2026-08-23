@@ -21,6 +21,7 @@ struct QuadraticEquation
 };
 
 int is_equal(double a, double b);
+void print_equation(struct QuadraticEquation *equation);
 enum RootsCount solve_quadratic_equation(struct QuadraticEquation *equation);
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation);
 

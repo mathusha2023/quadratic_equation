@@ -2,232 +2,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "my_assert.h"
-#include "config.h"
-
-static int set_eq_state(struct FSMParser *parser)
-{
-    if (parser->k == -1)
-        return 0;
-    parser->k = -1;
-    parser->state = EQ;
-    return 1;
-}
-
-static int process_start_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c))
-    {
-        parser->state = INTEGER_PART;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if ((char)tolower(c) == 'x')
-    {
-        parser->state = VARIABLE;
-    }
-    else
-        return 0;
-    return 1;
-}
-
-static int process_integer_part_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c))
-    {
-        parser->state = INTEGER_PART;
-    }
-    else if (c == '.')
-    {
-        parser->state = FRACTION_PART;
-    }
-    else if (isspace(c))
-    {
-        parser->state = SPACE_AFTER_NUM;
-    }
-    else if (c == '+')
-    {
-        parser->state = ADD;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (c == 'x')
-    {
-        parser->state = VARIABLE;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_fraction_part_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c))
-    {
-        parser->state = FRACTION_PART;
-    }
-    else if (isspace(c))
-    {
-        parser->state = SPACE_AFTER_NUM;
-    }
-    else if (c == '+')
-    {
-        parser->state = ADD;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (c == 'x')
-    {
-        parser->state = VARIABLE;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_variable_state(struct FSMParser *parser, char c)
-{
-    if (c == '^')
-    {
-        parser->state = POW;
-    }
-    else if (c == '+')
-    {
-        parser->state = ADD;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_add_sub_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c))
-    {
-        parser->state = INTEGER_PART;
-    }
-    else if (c == 'x')
-    {
-        parser->state = VARIABLE;
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_eq_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c))
-    {
-        parser->state = INTEGER_PART;
-    }
-    else if (c == 'x')
-    {
-        parser->state = VARIABLE;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_space_after_num_state(struct FSMParser *parser, char c)
-{
-    if (c == '+')
-    {
-        parser->state = ADD;
-    }
-    else if (c == '-')
-    {
-        parser->state = SUB;
-    }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_pow_state(struct FSMParser *parser, char c)
-{
-    if (isdigit(c) && c - '0' <= MAX_POW)
-    {
-        parser->state = POW_NUM;
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
-static int process_pow_num_state(struct FSMParser *parser, char c)
-{
-    if (isspace(c))
-    {
-        parser->state = SPACE_AFTER_NUM;
-        return 1;
-    }
-    return 0;
-}
+#include "fsm_parser_processes.h"
 
 /* возвращает указатель на первый некорректный символ
 или NULL в случае успешного парсинга */
@@ -235,11 +10,12 @@ static char *parse(struct FSMParser *parser)
 {
     char c = 0;
     char *pc = NULL;
-    int i = 0;
 
-    for (i = 0; (c = parser->s[i]); i++)
+    for (parser->curr_index = 0; (c = (char)tolower(parser->s[parser->curr_index])); parser->curr_index++)
     {
-        pc = &parser->s[i];
+        pc = &parser->s[parser->curr_index];
+
+        print_fsmparser(parser);
 
         switch (parser->state)
         {
@@ -283,13 +59,58 @@ static char *parse(struct FSMParser *parser)
             if (!process_pow_num_state(parser, c))
                 return pc;
             break;
+        case SPACE_AFTER_POW:
+            if (!process_space_after_pow_state(parser, c))
+                return pc;
+            break;
+        case SPACE_AFTER_VARIABLE:
+            if (!process_space_after_variable_state(parser, c))
+                return pc;
+            break;
         default:
             return pc;
         }
     }
 
     // если k = -1, то равно было встречено ровно 1 раз
-    return (parser->k == -1 && parser->state != EQ) ? NULL : &parser->s[i];
+    return (parser->k == -1 && parser->state != EQ) ? NULL : &parser->s[parser->curr_index];
+}
+
+static const char *get_str_state(enum FSMStates state)
+{
+    static const char *states_str[] = {"START",
+                                       "INTEGER_PART",
+                                       "FRACTION_PART",
+                                       "VARIABLE",
+                                       "ADD",
+                                       "SUB",
+                                       "EQ",
+                                       "SPACE_AFTER_NUM",
+                                       "POW",
+                                       "POW_NUM",
+                                       "SPACE_AFTER_POW",
+                                       "SPACE_AFTER_VARIABLE"};
+    return states_str[state];
+}
+
+void print_fsmparser(struct FSMParser *parser)
+{
+    printf("Parser data:\n"
+           ".s = %s\n"
+           ".state = %s\n"
+           ".k = %d\n"
+           ".curr_index = %d\n"
+           ".num_start_index = %d\n"
+           ".last_sign = %d\n"
+           ".last_coeff = %lg\n",
+           parser->s,
+           get_str_state(parser->state),
+           parser->k,
+           parser->curr_index,
+           parser->num_start_index,
+           parser->last_sign,
+           parser->last_coeff);
+    print_equation(parser->equation);
 }
 
 struct FSMParser init_fsmparser(char *s, struct QuadraticEquation *equation)
@@ -301,6 +122,10 @@ struct FSMParser init_fsmparser(char *s, struct QuadraticEquation *equation)
          .state = START,
          .equation = equation,
          .k = 1,
+         .curr_index = 0,
+         .num_start_index = 0,
+         .last_sign = 1,
+         .last_coeff = 0.,
          .parse = &parse};
     return parser;
 }
