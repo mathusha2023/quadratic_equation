@@ -232,6 +232,18 @@ int process_pow_num_state(struct FSMParser *parser, char c)
         set_state(parser, SPACE_AFTER_NUM);
         return 1;
     }
+    else if (c == '+')
+    {
+        return set_add_sub_state(ADD, parser);
+    }
+    else if (c == '-')
+    {
+        return set_add_sub_state(SUB, parser);
+    }
+    else if (c == '=')
+    {
+        return set_eq_state(parser);
+    }
     return 0;
 }
 

@@ -52,13 +52,12 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
     struct FSMParser parser = init_fsmparser(s, equation);
 
     char *c = parser.parse(&parser);
-    print_fsmparser(&parser);
 
     if (c)
     {
         int ind = (int)(c - s);
         printf("Incorrect input:\n");
-        printf("%s\n", s);
+        printf("%s", s);
         printf("%*c <- incorrect symbol\n", ind + 1, '^');
         ungetc('\n', stdin);
     }

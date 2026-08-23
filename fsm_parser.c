@@ -15,8 +15,6 @@ static char *parse(struct FSMParser *parser)
     {
         pc = &parser->s[parser->curr_index];
 
-        print_fsmparser(parser);
-
         switch (parser->state)
         {
         case START:
@@ -69,7 +67,10 @@ static char *parse(struct FSMParser *parser)
     }
 
     // если k = -1, то равно было встречено ровно 1 раз
-    return (parser->k == -1 && parser->state != EQ) ? NULL : &parser->s[parser->curr_index];
+    return (parser->k == -1 && parser->state != EQ &&
+            parser->state != ADD && parser->state != SUB)
+               ? NULL
+               : &parser->s[parser->curr_index];
 }
 
 static const char *get_str_state(enum FSMStates state)
