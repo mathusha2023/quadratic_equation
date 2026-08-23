@@ -6,7 +6,7 @@
 #include "my_assert.h"
 #include <stdlib.h>
 #include <string.h>
-#include "parser.h"
+#include "fsm_parser.h"
 
 void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(struct QuadraticEquation *equation))
 {
@@ -49,13 +49,17 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
     if (!fgets(s, BUFFERSIZE, stdin))
         return 0;
 
-    struct Parser parser = init_parser(s);
+    struct FSMParser parser = init_fsmparser(s, equation);
 
-    if (!parser.is_correct_format) // формат строки не соответствует
+    char *c = parser.parse(&parser);
+
+    if (c)
     {
-        ungetc('\n', stdin); // для работы функции get_coeffs_in_loop
-        return 0;
+        int ind = (int)(c - s);
+        printf("Incorrect input:\n");
+        printf("%s\n", s);
+        printf("%*c <- incorrect symbol\n", ind + 1, '^');
+        ungetc('\n', stdin);
     }
-
-    return parser.parse(&parser, equation);
+    return !c;
 }
