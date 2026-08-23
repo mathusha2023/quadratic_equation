@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     if (args.test)
         return !runTests();
 
-    struct QuadraticEquation equation = {0, 0, 0, 0, 0, NO_REAL_ROOTS};
+    struct QuadraticEquation equation = {.n_roots = NO_REAL_ROOTS};
 
     get_coeffs_in_loop(&equation, &parse_coeffs_from_equation);
     solve_quadratic_equation(&equation);

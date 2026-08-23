@@ -198,7 +198,7 @@ static int parse(struct Parser *parser, struct QuadraticEquation *equation)
 struct Parser init_parser(char *s)
 {
     format_string(s);
-    struct Parser parser = {s, 0, &parse};
-    parser.is_correct_format = check_format(s);
+    int is_correct_format = check_format(s);
+    struct Parser parser = {.s = s, .is_correct_format = is_correct_format, .parse = &parse};
     return parser;
 }

@@ -4,53 +4,263 @@
 #include "config.h"
 
 static const struct EquationTestCase test_cases[] = {
-    {1, {1, -5, 6, 3, 2, TWO_REAL_ROOTS}},       // x^2 - 5x + 6 = 0
-    {2, {1, -3, 2, 2, 1, TWO_REAL_ROOTS}},       // x^2 - 3x + 2 = 0
-    {3, {2, -7, 3, 3, 0.5, TWO_REAL_ROOTS}},     // 2x^2 - 7x + 3 = 0
-    {4, {1, 0, -1, 1, -1, TWO_REAL_ROOTS}},      // x^2 - 1 = 0
-    {5, {4, -4, -3, 1.5, -0.5, TWO_REAL_ROOTS}}, // 4x^2 - 4x - 3 = 0
+    {.num = 1,
+     .equation = {.a = 1,
+                  .b = -5,
+                  .c = 6,
+                  .x1 = 3,
+                  .x2 = 2,
+                  .n_roots = TWO_REAL_ROOTS}}, // x^2 - 5x + 6 = 0
+    {.num = 2,
+     .equation = {.a = 1,
+                  .b = -3,
+                  .c = 2,
+                  .x1 = 2,
+                  .x2 = 1,
+                  .n_roots = TWO_REAL_ROOTS}}, // x^2 - 3x + 2 = 0
+    {.num = 3,
+     .equation = {.a = 2,
+                  .b = -7,
+                  .c = 3,
+                  .x1 = 3,
+                  .x2 = 0.5,
+                  .n_roots = TWO_REAL_ROOTS}}, // 2x^2 - 7x + 3 = 0
+    {.num = 4,
+     .equation = {.a = 1,
+                  .b = 0,
+                  .c = -1,
+                  .x1 = 1,
+                  .x2 = -1,
+                  .n_roots = TWO_REAL_ROOTS}}, // x^2 - 1 = 0
+    {.num = 5,
+     .equation = {.a = 4,
+                  .b = -4,
+                  .c = -3,
+                  .x1 = 1.5,
+                  .x2 = -0.5,
+                  .n_roots = TWO_REAL_ROOTS}}, // 4x^2 - 4x - 3 = 0
 
-    {6, {1, -4, 4, 2, 2, ONE_REAL_ROOT}},     // x^2 - 4x + 4 = 0
-    {7, {1, 2, 1, -1, -1, ONE_REAL_ROOT}},    // x^2 + 2x + 1 = 0
-    {8, {4, -4, 1, 0.5, 0.5, ONE_REAL_ROOT}}, // 4x^2 - 4x + 1 = 0
-    {9, {1, 0, 0, 0, 0, ONE_REAL_ROOT}},      // x^2 = 0
+    {.num = 6,
+     .equation = {.a = 1,
+                  .b = -4,
+                  .c = 4,
+                  .x1 = 2,
+                  .x2 = 2,
+                  .n_roots = ONE_REAL_ROOT}}, // x^2 - 4x + 4 = 0
+    {.num = 7,
+     .equation = {.a = 1,
+                  .b = 2,
+                  .c = 1,
+                  .x1 = -1,
+                  .x2 = -1,
+                  .n_roots = ONE_REAL_ROOT}}, // x^2 + 2x + 1 = 0
+    {.num = 8,
+     .equation = {.a = 4,
+                  .b = -4,
+                  .c = 1,
+                  .x1 = 0.5,
+                  .x2 = 0.5,
+                  .n_roots = ONE_REAL_ROOT}}, // 4x^2 - 4x + 1 = 0
+    {.num = 9,
+     .equation = {.a = 1,
+                  .b = 0,
+                  .c = 0,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = ONE_REAL_ROOT}}, // x^2 = 0
 
-    {10, {1, 0, 1, 0, 0, NO_REAL_ROOTS}},  // x^2 + 1 = 0
-    {11, {1, -2, 3, 0, 0, NO_REAL_ROOTS}}, // x^2 - 2x + 3 = 0
-    {12, {2, 1, 5, 0, 0, NO_REAL_ROOTS}},  // 2x^2 + x + 5 = 0
-    {13, {1, -1, 1, 0, 0, NO_REAL_ROOTS}}, // x^2 - x + 1 = 0
+    {.num = 10,
+     .equation = {.a = 1,
+                  .b = 0,
+                  .c = 1,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}}, // x^2 + 1 = 0
+    {.num = 11,
+     .equation = {.a = 1,
+                  .b = -2,
+                  .c = 3,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}}, // x^2 - 2x + 3 = 0
+    {.num = 12,
+     .equation = {.a = 2,
+                  .b = 1,
+                  .c = 5,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}}, // 2x^2 + x + 5 = 0
+    {.num = 13,
+     .equation = {.a = 1,
+                  .b = -1,
+                  .c = 1,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}}, // x^2 - x + 1 = 0
 
-    {14, {-1, 5, -6, 3, 2, TWO_REAL_ROOTS}},   // -x^2 + 5x - 6 = 0
-    {15, {-1, -2, -1, -1, -1, ONE_REAL_ROOT}}, // -x^2 - 2x - 1 = 0
-    {16, {-1, 0, -1, 0, 0, NO_REAL_ROOTS}},    // -x^2 - 1 = 0
+    {.num = 14,
+     .equation = {.a = -1,
+                  .b = 5,
+                  .c = -6,
+                  .x1 = 3,
+                  .x2 = 2,
+                  .n_roots = TWO_REAL_ROOTS}}, // -x^2 + 5x - 6 = 0
+    {.num = 15,
+     .equation = {.a = -1,
+                  .b = -2,
+                  .c = -1,
+                  .x1 = -1,
+                  .x2 = -1,
+                  .n_roots = ONE_REAL_ROOT}}, // -x^2 - 2x - 1 = 0
+    {.num = 16,
+     .equation = {.a = -1,
+                  .b = 0,
+                  .c = -1,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}}, // -x^2 - 1 = 0
 
-    {17, {0.5, -1, 0.5, 1, 1, ONE_REAL_ROOT}}, // 0.5x^2 - x + 0.5 = 0
-    {18, {0.25, -1, 1, 2, 2, ONE_REAL_ROOT}},  // 0.25x^2 - x + 1 = 0
+    {.num = 17,
+     .equation = {.a = 0.5,
+                  .b = -1,
+                  .c = 0.5,
+                  .x1 = 1,
+                  .x2 = 1,
+                  .n_roots = ONE_REAL_ROOT}}, // 0.5x^2 - x + 0.5 = 0
+    {.num = 18,
+     .equation = {.a = 0.25,
+                  .b = -1,
+                  .c = 1,
+                  .x1 = 2,
+                  .x2 = 2,
+                  .n_roots = ONE_REAL_ROOT}}, // 0.25x^2 - x + 1 = 0
 
-    {19, {0, 2, -4, 2, 2, ONE_REAL_ROOT}},       // 2x - 4 = 0
-    {20, {0, 3, 9, -3, -3, ONE_REAL_ROOT}},      // 3x + 9 = 0
-    {21, {0, -5, 10, 2, 2, ONE_REAL_ROOT}},      // -5x + 10 = 0
-    {22, {0, 1, -0.5, 0.5, 0.5, ONE_REAL_ROOT}}, // x - 0.5 = 0
+    {.num = 19,
+     .equation = {.a = 0,
+                  .b = 2,
+                  .c = -4,
+                  .x1 = 2,
+                  .x2 = 2,
+                  .n_roots = ONE_REAL_ROOT}}, // 2x - 4 = 0
+    {.num = 20,
+     .equation = {.a = 0,
+                  .b = 3,
+                  .c = 9,
+                  .x1 = -3,
+                  .x2 = -3,
+                  .n_roots = ONE_REAL_ROOT}}, // 3x + 9 = 0
+    {.num = 21,
+     .equation = {.a = 0,
+                  .b = -5,
+                  .c = 10,
+                  .x1 = 2,
+                  .x2 = 2,
+                  .n_roots = ONE_REAL_ROOT}}, // -5x + 10 = 0
+    {.num = 22,
+     .equation = {.a = 0,
+                  .b = 1,
+                  .c = -0.5,
+                  .x1 = 0.5,
+                  .x2 = 0.5,
+                  .n_roots = ONE_REAL_ROOT}}, // x - 0.5 = 0
 
-    {23, {0, -2, -6, -3, -3, ONE_REAL_ROOT}}, // -2x - 6 = 0
+    {.num = 23,
+     .equation = {.a = 0,
+                  .b = -2,
+                  .c = -6,
+                  .x1 = -3,
+                  .x2 = -3,
+                  .n_roots = ONE_REAL_ROOT}}, // -2x - 6 = 0
 
-    {24, {0, 4, -2, 0.5, 0.5, ONE_REAL_ROOT}},  // 4x - 2 = 0
-    {25, {0, 2, 1, -0.5, -0.5, ONE_REAL_ROOT}}, // 2x + 1 = 0
+    {.num = 24,
+     .equation = {.a = 0,
+                  .b = 4,
+                  .c = -2,
+                  .x1 = 0.5,
+                  .x2 = 0.5,
+                  .n_roots = ONE_REAL_ROOT}}, // 4x - 2 = 0
+    {.num = 25,
+     .equation = {.a = 0,
+                  .b = 2,
+                  .c = 1,
+                  .x1 = -0.5,
+                  .x2 = -0.5,
+                  .n_roots = ONE_REAL_ROOT}}, // 2x + 1 = 0
 
-    {26, {0, 0, 0, 0, 0, INFINITY_ROOTS}},
+    {.num = 26,
+     .equation = {.a = 0,
+                  .b = 0,
+                  .c = 0,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = INFINITY_ROOTS}},
 
-    {27, {0, 0, 1, 0, 0, NO_REAL_ROOTS}},
-    {28, {0, 0, -5, 0, 0, NO_REAL_ROOTS}},
+    {.num = 27,
+     .equation = {.a = 0,
+                  .b = 0,
+                  .c = 1,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}},
+    {.num = 28,
+     .equation = {.a = 0,
+                  .b = 0,
+                  .c = -5,
+                  .x1 = 0,
+                  .x2 = 0,
+                  .n_roots = NO_REAL_ROOTS}},
 
-    {29, {1, -1, -1, 1.618033988749895, -0.618033988749895, TWO_REAL_ROOTS}},
-    {30, {1, 1, -1, 0.618033988749895, -1.618033988749895, TWO_REAL_ROOTS}},
+    {.num = 29,
+     .equation = {.a = 1,
+                  .b = -1,
+                  .c = -1,
+                  .x1 = 1.618033988749895,
+                  .x2 = -0.618033988749895,
+                  .n_roots = TWO_REAL_ROOTS}},
+    {.num = 30,
+     .equation = {.a = 1,
+                  .b = 1,
+                  .c = -1,
+                  .x1 = 0.618033988749895,
+                  .x2 = -1.618033988749895,
+                  .n_roots = TWO_REAL_ROOTS}},
 
-    {31, {1, -1000000000, 1, 1000000000, 1e-9, TWO_REAL_ROOTS}},
-    {32, {1, 1000000000, 1, -1e-9, -1000000000, TWO_REAL_ROOTS}},
+    {.num = 31,
+     .equation = {.a = 1,
+                  .b = -1000000000,
+                  .c = 1,
+                  .x1 = 1000000000,
+                  .x2 = 1e-9,
+                  .n_roots = TWO_REAL_ROOTS}},
+    {.num = 32,
+     .equation = {.a = 1,
+                  .b = 1000000000,
+                  .c = 1,
+                  .x1 = -1e-9,
+                  .x2 = -1000000000,
+                  .n_roots = TWO_REAL_ROOTS}},
 
-    {33, {0, 1, -1, 1, 1, ONE_REAL_ROOT}},    // x - 1 = 0
-    {34, {0, -1, -1, -1, -1, ONE_REAL_ROOT}}, // -x - 1 = 0
-    {35, {0, 0.000001, -0.000002, 2, 2, ONE_REAL_ROOT}},
+    {.num = 33,
+     .equation = {.a = 0,
+                  .b = 1,
+                  .c = -1,
+                  .x1 = 1,
+                  .x2 = 1,
+                  .n_roots = ONE_REAL_ROOT}}, // x - 1 = 0
+    {.num = 34,
+     .equation = {.a = 0,
+                  .b = -1,
+                  .c = -1,
+                  .x1 = -1,
+                  .x2 = -1,
+                  .n_roots = ONE_REAL_ROOT}}, // -x - 1 = 0
+    {.num = 35,
+     .equation = {.a = 0,
+                  .b = 0.000001,
+                  .c = -0.000002,
+                  .x1 = 2,
+                  .x2 = 2,
+                  .n_roots = ONE_REAL_ROOT}},
 };
 
 static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *eq2)
@@ -79,7 +289,10 @@ static const char *get_roots_count_str(enum RootsCount n_roots)
 
 static int run_test(struct EquationTestCase test_case)
 {
-    struct QuadraticEquation equation = {test_case.equation.a, test_case.equation.b, test_case.equation.c, 0, 0, NO_REAL_ROOTS};
+    struct QuadraticEquation equation = {.a = test_case.equation.a,
+                                         .b = test_case.equation.b,
+                                         .c = test_case.equation.c,
+                                         .n_roots = NO_REAL_ROOTS};
     solve_quadratic_equation(&equation);
 
     int is_passed = check_equal(&equation, &test_case.equation);
