@@ -59,10 +59,6 @@ static char *parse(struct FSMParser *parser)
             if (!process_pow_num_state(parser, c))
                 return pc;
             break;
-        case SPACE_AFTER_POW:
-            if (!process_space_after_pow_state(parser, c))
-                return pc;
-            break;
         case SPACE_AFTER_VARIABLE:
             if (!process_space_after_variable_state(parser, c))
                 return pc;
@@ -88,7 +84,6 @@ static const char *get_str_state(enum FSMStates state)
                                        "SPACE_AFTER_NUM",
                                        "POW",
                                        "POW_NUM",
-                                       "SPACE_AFTER_POW",
                                        "SPACE_AFTER_VARIABLE"};
     return states_str[state];
 }

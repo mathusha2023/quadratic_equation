@@ -15,7 +15,6 @@ enum FSMStates
     SPACE_AFTER_NUM,
     POW,
     POW_NUM,
-    SPACE_AFTER_POW,
     SPACE_AFTER_VARIABLE
 };
 

@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include "config.h"
 
+static void set_state(struct FSMParser *parser, enum FSMStates state)
+{
+    parser->state = state;
+}
+
 static int set_eq_state(struct FSMParser *parser)
 {
     if (parser->k == -1)
@@ -11,7 +16,7 @@ static int set_eq_state(struct FSMParser *parser)
     parser->k = -1;
     parser->last_coeff = 1;
     parser->last_sign = 1;
-    parser->state = EQ;
+    set_state(parser, EQ);
     return 1;
 }
 
@@ -20,7 +25,7 @@ static int set_add_sub_state(enum FSMStates state, struct FSMParser *parser)
     if (state == ADD || state == SUB)
     {
         parser->last_sign = (state == ADD ? 1 : -1);
-        parser->state = state;
+        set_state(parser, state);
         return 1;
     }
     return 0;
@@ -42,11 +47,14 @@ static void parse_and_update_coeff(struct FSMParser *parser, double *coeff)
     update_coeff(parser, coeff);
 }
 
+// processing functions
+
 int process_start_state(struct FSMParser *parser, char c)
 {
     if (isdigit(c))
     {
-        parser->state = INTEGER_PART;
+        set_state(parser, INTEGER_PART);
+        parser->num_start_index = parser->curr_index;
     }
     else if (c == '-')
     {
@@ -54,7 +62,7 @@ int process_start_state(struct FSMParser *parser, char c)
     }
     else if (c == 'x')
     {
-        parser->state = VARIABLE;
+        set_state(parser, VARIABLE);
         parser->last_coeff = 1;
     }
     else
@@ -64,44 +72,15 @@ int process_start_state(struct FSMParser *parser, char c)
 
 int process_integer_part_state(struct FSMParser *parser, char c)
 {
-    if (isdigit(c))
-    {
-        ;
-    }
+    if (process_fraction_part_state(parser, c))
+        return 1;
+
     else if (c == '.')
     {
-        parser->state = FRACTION_PART;
+        set_state(parser, FRACTION_PART);
+        return 1;
     }
-    else if (isspace(c))
-    {
-        parse_and_update_coeff(parser, &parser->equation->c);
-        parser->state = SPACE_AFTER_NUM;
-    }
-    else if (c == '+')
-    {
-        parse_and_update_coeff(parser, &parser->equation->c);
-        return set_add_sub_state(ADD, parser);
-    }
-    else if (c == '-')
-    {
-        parse_and_update_coeff(parser, &parser->equation->c);
-        return set_add_sub_state(SUB, parser);
-    }
-    else if (c == '=')
-    {
-        parse_and_update_coeff(parser, &parser->equation->c);
-        return set_eq_state(parser);
-    }
-    else if (c == 'x')
-    {
-        parse_coeff(parser);
-        parser->state = VARIABLE;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
+    return 0;
 }
 
 int process_fraction_part_state(struct FSMParser *parser, char c)
@@ -113,7 +92,7 @@ int process_fraction_part_state(struct FSMParser *parser, char c)
     else if (isspace(c))
     {
         parse_and_update_coeff(parser, &parser->equation->c);
-        parser->state = SPACE_AFTER_NUM;
+        set_state(parser, SPACE_AFTER_NUM);
     }
     else if (c == '+')
     {
@@ -133,12 +112,10 @@ int process_fraction_part_state(struct FSMParser *parser, char c)
     else if (c == 'x')
     {
         parse_coeff(parser);
-        parser->state = VARIABLE;
+        set_state(parser, VARIABLE);
     }
     else
-    {
         return 0;
-    }
     return 1;
 }
 
@@ -146,7 +123,7 @@ int process_variable_state(struct FSMParser *parser, char c)
 {
     if (c == '^')
     {
-        parser->state = POW;
+        set_state(parser, POW);
     }
     else if (c == '+')
     {
@@ -166,12 +143,10 @@ int process_variable_state(struct FSMParser *parser, char c)
     else if (isspace(c))
     {
         update_coeff(parser, &parser->equation->b);
-        parser->state = SPACE_AFTER_VARIABLE;
+        set_state(parser, SPACE_AFTER_VARIABLE);
     }
     else
-    {
         return 0;
-    }
     return 1;
 }
 
@@ -180,49 +155,25 @@ int process_add_sub_state(struct FSMParser *parser, char c)
     if (isdigit(c))
     {
         parser->num_start_index = parser->curr_index;
-        parser->state = INTEGER_PART;
+        set_state(parser, INTEGER_PART);
     }
     else if (c == 'x')
     {
         parser->last_coeff = 1;
-        parser->state = VARIABLE;
+        set_state(parser, VARIABLE);
     }
     else if (isspace(c))
-    {
         ;
-    }
     else
-    {
         return 0;
-    }
     return 1;
 }
 
 int process_eq_state(struct FSMParser *parser, char c)
 {
-    if (isdigit(c))
-    {
-        parser->state = INTEGER_PART;
-        parser->num_start_index = parser->curr_index;
-    }
-    else if (c == 'x')
-    {
-        parser->last_coeff = 1;
-        parser->state = VARIABLE;
-    }
-    else if (c == '-')
-    {
-        return set_add_sub_state(SUB, parser);
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
+    if (process_start_state(parser, c) || isspace(c))
+        return 1;
+    return 0;
 }
 
 int process_space_after_num_state(struct FSMParser *parser, char c)
@@ -240,13 +191,9 @@ int process_space_after_num_state(struct FSMParser *parser, char c)
         return set_eq_state(parser);
     }
     else if (isspace(c))
-    {
         ;
-    }
     else
-    {
         return 0;
-    }
     return 1;
 }
 
@@ -269,16 +216,12 @@ int process_pow_state(struct FSMParser *parser, char c)
         default:
             return 0;
         }
-        parser->state = POW_NUM;
+        set_state(parser, POW_NUM);
     }
     else if (isspace(c))
-    {
         ;
-    }
     else
-    {
         return 0;
-    }
     return 1;
 }
 
@@ -286,62 +229,20 @@ int process_pow_num_state(struct FSMParser *parser, char c)
 {
     if (isspace(c))
     {
-        parser->state = SPACE_AFTER_POW;
+        set_state(parser, SPACE_AFTER_NUM);
         return 1;
     }
     return 0;
 }
 
-int process_space_after_pow_state(struct FSMParser *parser, char c)
-{
-    if (c == '+')
-    {
-        return set_add_sub_state(ADD, parser);
-    }
-    else if (c == '-')
-    {
-        return set_add_sub_state(SUB, parser);
-    }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
-}
-
 int process_space_after_variable_state(struct FSMParser *parser, char c)
 {
-    if (c == '+')
-    {
-        return set_add_sub_state(ADD, parser);
-    }
-    else if (c == '-')
-    {
-        return set_add_sub_state(SUB, parser);
-    }
+    if (process_space_after_num_state(parser, c))
+        return 1;
     else if (c == '^')
     {
-        parser->state = POW;
+        set_state(parser, POW);
+        return 1;
     }
-    else if (c == '=')
-    {
-        return set_eq_state(parser);
-    }
-    else if (isspace(c))
-    {
-        ;
-    }
-    else
-    {
-        return 0;
-    }
-    return 1;
+    return 0;
 }
