@@ -27,18 +27,6 @@
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
-const char ALLOWED_CHARS[] = {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    ' ', '\t', '\n', '\v', '\f', '\r',
-    'x',
-    'X',
-    '.', '^', '=', '+', '-'};
-const char DISALLOW_COMBINATIONS[][3] = {
-    "+-", "-+", "--", "++",
-    "^+", "+^", "^-", "-^", "^^",
-    "0^", "1^", "2^", "^3", "3^", "^4", "4^",
-    "^5", "5^", "^6", "6^", "^7", "7^",
-    "^8", "8^", "^9", "9^"};
 #define d_is_equal(a, b) (fabs((a) - (b)) < EPSILON)
 
 #endif // CONFIG_H

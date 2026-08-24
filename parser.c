@@ -1,11 +1,25 @@
+// Deprecated Parser
+
 #include "parser.h"
 #include <stdio.h>
 #include <ctype.h>
 #include "solve_equation.h"
-#include "config.h"
 #include "my_assert.h"
 #include <stdlib.h>
 #include <string.h>
+
+const char ALLOWED_CHARS[] = {
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    ' ', '\t', '\n', '\v', '\f', '\r',
+    'x',
+    'X',
+    '.', '^', '=', '+', '-'};
+const char DISALLOW_COMBINATIONS[][3] = {
+    "+-", "-+", "--", "++",
+    "^+", "+^", "^-", "-^", "^^",
+    "0^", "1^", "2^", "^3", "3^", "^4", "4^",
+    "^5", "5^", "^6", "6^", "^7", "7^",
+    "^8", "8^", "^9", "9^"};
 
 static int is_char_allowed(char c)
 {

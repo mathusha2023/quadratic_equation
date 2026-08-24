@@ -1,3 +1,5 @@
+// Deprecated Parser tests
+
 #include "solve_equation.h"
 
 struct ParserTestCase

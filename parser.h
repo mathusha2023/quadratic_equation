@@ -1,3 +1,5 @@
+// Deprecated Parser
+
 #include "solve_equation.h"
 
 struct Parser
