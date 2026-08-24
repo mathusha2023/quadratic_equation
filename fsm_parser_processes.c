@@ -77,6 +77,16 @@ int process_integer_part_state(struct FSMParser *parser, char c)
 
     else if (c == '.')
     {
+        set_state(parser, DOT);
+        return 1;
+    }
+    return 0;
+}
+
+int process_dot_state(struct FSMParser *parser, char c)
+{
+    if (isdigit(c))
+    {
         set_state(parser, FRACTION_PART);
         return 1;
     }

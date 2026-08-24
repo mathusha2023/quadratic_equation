@@ -58,7 +58,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
         int ind = (int)(c - s);
         printf("Incorrect input:\n");
         printf("%s", s);
-        printf("%*c <- incorrect symbol\n", ind + 1, '^');
+        printf(RED_C "%*c <- incorrect symbol\n" RESET_C, ind + 1, '^');
         ungetc('\n', stdin);
     }
     return !c;

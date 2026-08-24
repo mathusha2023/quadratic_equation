@@ -25,6 +25,10 @@ static char *parse(struct FSMParser *parser)
             if (!process_integer_part_state(parser, c))
                 return pc;
             break;
+        case DOT:
+            if (!process_dot_state(parser, c))
+                return pc;
+            break;
         case FRACTION_PART:
             if (!process_fraction_part_state(parser, c))
                 return pc;
@@ -68,7 +72,7 @@ static char *parse(struct FSMParser *parser)
 
     // если k = -1, то равно было встречено ровно 1 раз
     return (parser->k == -1 && parser->state != EQ &&
-            parser->state != ADD && parser->state != SUB)
+            parser->state != ADD && parser->state != SUB && parser->state != DOT)
                ? NULL
                : &parser->s[parser->curr_index];
 }
@@ -77,6 +81,7 @@ static const char *get_str_state(enum FSMStates state)
 {
     static const char *states_str[] = {"START",
                                        "INTEGER_PART",
+                                       "DOT",
                                        "FRACTION_PART",
                                        "VARIABLE",
                                        "ADD",

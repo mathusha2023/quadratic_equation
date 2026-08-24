@@ -2,6 +2,7 @@
 
 int process_start_state(struct FSMParser *parser, char c);
 int process_integer_part_state(struct FSMParser *parser, char c);
+int process_dot_state(struct FSMParser *parser, char c);
 int process_fraction_part_state(struct FSMParser *parser, char c);
 int process_variable_state(struct FSMParser *parser, char c);
 int process_add_sub_state(struct FSMParser *parser, char c);

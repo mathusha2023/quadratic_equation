@@ -7,6 +7,7 @@ enum FSMStates
 {
     START,
     INTEGER_PART,
+    DOT,
     FRACTION_PART,
     VARIABLE,
     ADD,
