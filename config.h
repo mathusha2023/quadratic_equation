@@ -2,31 +2,27 @@
 #define CONFIG_H
 
 #include <math.h>
+#include "cmd_args.h"
 
 // colors block
-#define USE_COLORS // comment this line to disable colors
 #define RESET_C "\x1b[0m"
 
-#ifdef USE_COLORS // if defined, colors should be valid
+#define use_color(color) (ARGS.colors ? color : RESET_C)
 
-#define RED_C "\x1b[31m"
-#define GREEN_C "\x1b[32m"
-#define BLUE_C "\x1b[34m"
-#define YELLOW_C "\x1b[33m"
-
-#else // if USE_COLORS isnt defined, use RESET_C
-
-#define RED_C RESET_C
-#define GREEN_C RESET_C
-#define BLUE_C RESET_C
-#define YELLOW_C RESET_C
-
-#endif // USE_COLORS
+#define RED_C use_color("\x1b[31m")
+#define GREEN_C use_color("\x1b[32m")
+#define BLUE_C use_color("\x1b[34m")
+#define YELLOW_C use_color("\x1b[33m")
 // colors block end
 
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
+
+// глобальная для всей программы переменная,
+// которая будет содержать аргументы командной строки после запуска программы
+extern struct CmdArgs ARGS;
+
 #define d_is_equal(a, b) (fabs((a) - (b)) < EPSILON)
 
 #endif // CONFIG_H

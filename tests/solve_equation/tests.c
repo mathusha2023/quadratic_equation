@@ -298,18 +298,19 @@ static int run_test(struct EquationTestCase test_case)
     int is_passed = check_equal(&equation, &test_case.equation);
     if (is_passed)
     {
-        printf(GREEN_C "Quadratic equation test %d passed!\n" RESET_C, test_case.num);
+        printf("%sQuadratic equation test %d passed!\n%s", GREEN_C, test_case.num, RESET_C);
     }
     else
     {
-        printf(RED_C "Quadratic equation test %d FAILED\n"
-                     "Expected %s roots, x1=%lg, x2=%lg\n"
-                     "Got      %s roots, x1=%lg, x2=%lg\n" RESET_C,
+        printf("%sQuadratic equation test %d FAILED\n"
+               "Expected %s roots, x1=%lg, x2=%lg\n"
+               "Got      %s roots, x1=%lg, x2=%lg\n%s",
+               RED_C,
                test_case.num,
                get_roots_count_str(test_case.equation.n_roots),
                test_case.equation.x1, test_case.equation.x2,
                get_roots_count_str(equation.n_roots),
-               equation.x1, equation.x2);
+               equation.x1, equation.x2, RESET_C);
     }
     return is_passed;
 }

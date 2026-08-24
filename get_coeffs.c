@@ -19,7 +19,7 @@ void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(str
             return;
         while ((c = getchar()) != '\n' && c != EOF)
             ;
-        printf(RED_C "Enter correct coefficients!\n\n" RESET_C);
+        printf("%sEnter correct coefficients!\n\n%s", RED_C, RESET_C);
     }
 }
 
@@ -27,9 +27,9 @@ int get_coeffs(struct QuadraticEquation *equation)
 {
     my_assert(equation);
 
-    printf(BLUE_C "Enter coefficients\n");
+    printf("%sEnter coefficients\n", BLUE_C);
     printf("Input format shiould be\n");
-    printf("%%a %%b %%c\n" RESET_C);
+    printf("%%a %%b %%c\n%s", RESET_C);
 
     int res = scanf("%lg %lg %lg", &equation->a, &equation->b, &equation->c);
     int c = getchar();
@@ -40,10 +40,10 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
 {
     my_assert(equation);
 
-    printf(BLUE_C "Enter your equation:\n");
+    printf("%sEnter your equation:\n", BLUE_C);
     printf("Format: ax^2 + bx + c = 0\n");
     printf("Note: valid input may be ax^2 + bx + c = dx^2 + fx + g\n");
-    printf("Your equation: " RESET_C);
+    printf("Your equation: %s", RESET_C);
 
     char s[BUFFERSIZE] = {};
     if (!fgets(s, BUFFERSIZE, stdin))
@@ -58,7 +58,7 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
         int ind = (int)(c - s);
         printf("Incorrect input:\n");
         printf("%s", s);
-        printf(RED_C "%*c <- incorrect symbol\n" RESET_C, ind + 1, '^');
+        printf("%s%*c <- incorrect symbol\n%s", RED_C, ind + 1, '^', RESET_C);
         ungetc('\n', stdin);
     }
     return !c;

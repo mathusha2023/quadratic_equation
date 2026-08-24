@@ -329,44 +329,47 @@ static int run_test(struct FSMParserTestCase test_case)
 
         if (ind != test_case.error_index)
         {
-            printf(RED_C "Parser test %d FAILED\n"
-                         "String: %s\n"
-                         "Expected: error_index=%d\n"
-                         "Got:      error_index=%d\n" RESET_C,
-                   test_case.num, test_case.s, test_case.error_index, ind);
+            printf("%sParser test %d FAILED\n"
+                   "String: %s\n"
+                   "Expected: error_index=%d\n"
+                   "Got:      error_index=%d\n%s",
+                   RED_C,
+                   test_case.num, test_case.s, test_case.error_index, ind, RESET_C);
             free(s);
             return 0;
         }
 
-        printf(GREEN_C "Parser test %d passed!\n" RESET_C, test_case.num);
+        printf("%sParser test %d passed!\n%s", GREEN_C, test_case.num, RESET_C);
         free(s);
         return 1;
     }
 
     if (test_case.error_index != -1)
     {
-        printf(RED_C "Parser test %d FAILED\n"
-                     "String: %s\n"
-                     "Expected: error_index=%d\n"
-                     "Got:      error_index=-1\n" RESET_C,
-               test_case.num, test_case.s, test_case.error_index);
+        printf("%sParser test %d FAILED\n"
+               "String: %s\n"
+               "Expected: error_index=%d\n"
+               "Got:      error_index=-1\n%s",
+               RED_C,
+               test_case.num, test_case.s, test_case.error_index, RESET_C);
         free(s);
         return 0;
     }
 
     if (d_is_equal(eq.a, test_case.equation.a) && d_is_equal(eq.b, test_case.equation.b) && d_is_equal(eq.b, test_case.equation.b))
     {
-        printf(GREEN_C "Parser test %d passed!\n" RESET_C, test_case.num);
+        printf("%sParser test %d passed!\n%s", GREEN_C, test_case.num, RESET_C);
         free(s);
         return 1;
     }
-    printf(RED_C "Parser test %d FAILED\n"
-                 "String: %s\n"
-                 "Expected: a=%lg, b=%lg, c=%lg\n"
-                 "Got:      a=%lg, b=%lg, c=%lg\n" RESET_C,
+    printf("%sParser test %d FAILED\n"
+           "String: %s\n"
+           "Expected: a=%lg, b=%lg, c=%lg\n"
+           "Got:      a=%lg, b=%lg, c=%lg\n%s",
+           RED_C,
            test_case.num, test_case.s,
            test_case.equation.a, test_case.equation.b, test_case.equation.c,
-           eq.a, eq.b, eq.c);
+           eq.a, eq.b, eq.c, RESET_C);
     free(s);
     return 0;
 }

@@ -1,3 +1,6 @@
+#ifndef CMD_ARGS_H
+#define CMD_ARGS_H
+
 #include <string.h>
 
 struct CmdArgs
@@ -6,4 +9,6 @@ struct CmdArgs
     int colors;
 };
 
-struct CmdArgs get_args(int argc, char *argv[]);
+void get_args(int argc, char *argv[]);
+
+#endif // CMD_ARGS_H

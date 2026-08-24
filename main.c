@@ -5,11 +5,13 @@
 #include "cmd_args.h"
 #include "tests/tests.h"
 
+struct CmdArgs ARGS = {.colors = 1};
+
 int main(int argc, char *argv[])
 {
-    struct CmdArgs args = get_args(argc, argv);
+    get_args(argc, argv);
 
-    if (args.test)
+    if (ARGS.test)
         return !runTests();
 
     struct QuadraticEquation equation = {.n_roots = NO_REAL_ROOTS};
