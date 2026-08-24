@@ -6,9 +6,9 @@ void get_args(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         char *arg = argv[i];
-        if (!strcmp(arg, "--test") || !strcmp(arg, "-t"))
+        if (!strcmp(arg, TEST_ARG))
             ARGS.test = 1;
-        if (!strcmp(arg, "--disable-colors"))
+        if (!strcmp(arg, DISABLE_COLORS_ARG))
             ARGS.colors = 0;
     }
 }

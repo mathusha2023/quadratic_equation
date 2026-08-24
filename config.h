@@ -15,6 +15,11 @@
 #define YELLOW_C use_color("\x1b[33m")
 // colors block end
 
+// cmd args block
+#define TEST_ARG "--test"
+#define DISABLE_COLORS_ARG "--disable-colors"
+// cmd args block end
+
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
