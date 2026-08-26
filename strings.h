@@ -1,3 +1,6 @@
+#ifndef STRINGS_H
+#define STRINGS_H
+
 const char ARROW_S[] = "------> ";
 const char GREETING_S[] = "Очень добрый день! Я - новейшая разработка\n"
                           "одного из гениальнейших умов мира, и я\n"
@@ -11,3 +14,5 @@ const char ERROR_S[] = "Упс, кажется, вы ввели некоррек
                        "Попробуйте ввести задание еще раз, бип\n";
 
 void print_phrase(const char *s);
+
+#endif // STRINGS_H
