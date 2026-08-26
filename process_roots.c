@@ -127,19 +127,25 @@ static void loading(void)
 {
     const int sleep_time = 4; // in seconds
     const int n_ticks = 100;
+    int j = 0;
 
     printf("%s", YELLOW_C);
-    for (int i = 0; i < n_ticks; i++)
+    for (int i = 0; i <= n_ticks; i++)
     {
-        printf("%sРешено %d%%\r", ARROW_S, i * n_ticks / 100);
+        printf("%sДумаю... ", ARROW_S);
+        for (j = 0; j < 10; j++)
+        {
+            printf("%s", j * 10 < i ? "█" : "░");
+        }
+        printf(" %d%%\r", i);
+
         if (ARGS.output_delay)
         {
             fflush(stdout);
             usleep((int)1e6 * sleep_time / n_ticks); // microseconds
         }
     }
-    printf("%sРешено 100%%\n", ARROW_S);
-    printf(RESET_C);
+    printf("\n" RESET_C);
 }
 
 void process_roots_with_pretty_print(struct QuadraticEquation *equation)
