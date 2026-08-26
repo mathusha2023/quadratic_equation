@@ -8,6 +8,7 @@ struct CmdArgs
     int test;
     int colors;
     int output_delay;
+    int speech;
 };
 
 void get_args(int argc, char *argv[]);

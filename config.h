@@ -20,6 +20,7 @@
 #define TEST_ARG "--test"
 #define DISABLE_COLORS_ARG "--disable-colors"
 #define DISABLE_OUTPUT_DELAY_ARG "--disable-output-delay"
+#define DISABLE_SPEECH_ARG "--disable-speech"
 // cmd args block end
 
 // file path block

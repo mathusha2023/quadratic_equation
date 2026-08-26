@@ -12,5 +12,7 @@ void get_args(int argc, char *argv[])
             ARGS.colors = 0;
         if (!strcmp(arg, DISABLE_OUTPUT_DELAY_ARG))
             ARGS.output_delay = 0;
+        if (!strcmp(arg, DISABLE_SPEECH_ARG))
+            ARGS.speech = 0;
     }
 }

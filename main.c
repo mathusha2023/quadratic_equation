@@ -7,7 +7,8 @@
 
 struct CmdArgs ARGS = {
     .colors = 1,
-    .output_delay = 1};
+    .output_delay = 1,
+    .speech = 1};
 
 int main(int argc, char *argv[])
 {

@@ -28,6 +28,9 @@ void say(const char *s)
 {
     my_assert(s);
 
+    if (!ARGS.speech)
+        return;
+
     const char *command_start = "say -v Milena -r 190 \"";
     const char *command_end = "\" &";
     char *p = (char *)calloc(strlen(command_start) + strlen(s) + strlen(command_end) + 1, sizeof(char));
