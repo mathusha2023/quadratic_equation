@@ -13,6 +13,6 @@ const char ERROR_S[] = "Упс, кажется, вы ввели некоррек
                        "уравнение. Бубс показал, где именно ошибка.\n"
                        "Попробуйте ввести задание еще раз, бип\n";
 
-void print_phrase(const char *s);
+// void print_phrase(const char *s);
 
 #endif // STRINGS_H
