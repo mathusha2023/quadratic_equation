@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "solve_equation.h"
 #include "config.h"
+#include "my_assert.h"
 
 static const struct EquationTestCase test_cases[] = {
     {.num = 1,
@@ -265,6 +266,13 @@ static const struct EquationTestCase test_cases[] = {
 
 static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *eq2)
 {
+    my_assert(eq1);
+    my_assert(eq2);
+    my_assert(isfinite(eq1->x1));
+    my_assert(isfinite(eq1->x2));
+    my_assert(isfinite(eq2->x1));
+    my_assert(isfinite(eq2->x2));
+
     return eq1->n_roots == eq2->n_roots &&
            ((d_is_equal(eq1->x1, eq2->x1) && d_is_equal(eq1->x2, eq2->x2)) ||
             (d_is_equal(eq1->x1, eq2->x2) && d_is_equal(eq1->x2, eq2->x1)));

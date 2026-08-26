@@ -34,6 +34,8 @@ static int is_char_allowed(char c)
 
 static int has_disallow_sequences(char *s)
 {
+    my_assert(s);
+
     const size_t length = sizeof DISALLOW_COMBINATIONS / sizeof(DISALLOW_COMBINATIONS[0]);
     size_t i = 0;
 
@@ -47,12 +49,16 @@ static int has_disallow_sequences(char *s)
 
 static int ends_with(char *s, char c)
 {
+    my_assert(s);
+
     size_t len = strlen(s);
     return len && s[len - 1] == c;
 }
 
 static int is_end_char_allowed(char *s)
 {
+    my_assert(s);
+
     const char allowed_chars[] = "1234567890x";
     int i = 0;
 
@@ -66,6 +72,8 @@ static int is_end_char_allowed(char *s)
 
 static int is_start_char_allowed(char *s)
 {
+    my_assert(s);
+
     const char allowed_chars[] = "1234567890x+-";
     int i = 0;
 
@@ -79,6 +87,8 @@ static int is_start_char_allowed(char *s)
 
 static int check_format(char *s)
 {
+    my_assert(s);
+
     int i = 0;
     int count = 0;
 
@@ -95,6 +105,8 @@ static int check_format(char *s)
 
 static void format_string(char *s)
 {
+    my_assert(s);
+
     int i = 0, j = 0;
     for (i = j = 0; s[i]; i++)
     {
@@ -107,6 +119,8 @@ static void format_string(char *s)
 // удаляет из строки символы с left включительно до right не включительно
 static void delete_substr(char *s, size_t left, size_t right)
 {
+    my_assert(s);
+
     size_t i = 0, j = 0;
     for (i = j = 0; s[i]; i++)
     {
@@ -119,6 +133,8 @@ static void delete_substr(char *s, size_t left, size_t right)
 
 static double str_sum(char *s)
 {
+    my_assert(s);
+
     double sum = 0;
     while (*s)
         sum += strtod(s, &s);
@@ -127,6 +143,9 @@ static double str_sum(char *s)
 
 static double find_one_coeff(char *s, const char *pat)
 {
+    my_assert(s);
+    my_assert(pat);
+
     double x = 0;
     char *p = NULL;
     size_t left = 0, right = 0;
@@ -154,6 +173,11 @@ static double find_one_coeff(char *s, const char *pat)
 
 static void find_part_coeffs(char *s, double *pa, double *pb, double *pc)
 {
+    my_assert(s);
+    my_assert(pa);
+    my_assert(pb);
+    my_assert(pc);
+
     *pa = *pb = *pc = 0;
 
     *pa = find_one_coeff(s, "x^2");
@@ -167,6 +191,8 @@ static void find_part_coeffs(char *s, double *pa, double *pb, double *pc)
 
 static int find_full_coeffs(char *s, struct QuadraticEquation *equation)
 {
+    my_assert(s);
+    my_assert(equation);
     my_assert(check_format(s));
 
     double a1 = 0, b1 = 0, c1 = 0;
@@ -206,11 +232,16 @@ static int find_full_coeffs(char *s, struct QuadraticEquation *equation)
 
 static int parse(struct Parser *parser, struct QuadraticEquation *equation)
 {
+    my_assert(parser);
+    my_assert(equation);
+
     return parser->is_correct_format && find_full_coeffs(parser->s, equation);
 }
 
 struct Parser init_parser(char *s)
 {
+    my_assert(s);
+
     format_string(s);
     int is_correct_format = check_format(s);
     struct Parser parser = {.s = s, .is_correct_format = is_correct_format, .parse = &parse};

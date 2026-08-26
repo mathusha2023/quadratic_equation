@@ -58,5 +58,7 @@ int is_equal(double a, double b)
 
 void print_equation(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     printf("Equation: .a = %lg, .b = %lg, .c = %lg\n", equation->a, equation->b, equation->c);
 }

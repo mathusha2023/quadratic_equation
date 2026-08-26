@@ -6,6 +6,7 @@
 #include "config.h"
 #include "strings.h"
 #include "files.h"
+#include "my_assert.h"
 
 static double normilize_zero(double x)
 {
@@ -31,6 +32,8 @@ static const char *get_str_roots_count(enum RootsCount count)
 
 void pretty_print_equation(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     if (!d_is_equal(equation->a, 0))
     {
         if (d_is_equal(equation->a, 1))
@@ -90,6 +93,8 @@ void pretty_print_equation(struct QuadraticEquation *equation)
 
 static int print_answer_table(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     printf("%s", GREEN_C);
     printf("Уравнение: ");
     pretty_print_equation(equation);
@@ -139,6 +144,8 @@ static void loading(void)
 
 void process_roots_with_pretty_print(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     print_phrase(THINKING_S);
     loading();
     print_phrase(SOLVED_S);

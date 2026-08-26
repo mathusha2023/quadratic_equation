@@ -3,14 +3,19 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "config.h"
+#include "my_assert.h"
 
 static void set_state(struct FSMParser *parser, enum FSMStates state)
 {
+    my_assert(parser);
+
     parser->state = state;
 }
 
 static int set_eq_state(struct FSMParser *parser)
 {
+    my_assert(parser);
+
     if (parser->k == -1)
         return 0;
     parser->k = -1;
@@ -22,6 +27,8 @@ static int set_eq_state(struct FSMParser *parser)
 
 static int set_add_sub_state(enum FSMStates state, struct FSMParser *parser)
 {
+    my_assert(parser);
+
     if (state == ADD || state == SUB)
     {
         parser->last_sign = (state == ADD ? 1 : -1);
@@ -33,11 +40,16 @@ static int set_add_sub_state(enum FSMStates state, struct FSMParser *parser)
 
 static void parse_coeff(struct FSMParser *parser)
 {
+    my_assert(parser);
+
     parser->last_coeff = strtod(parser->s + parser->num_start_index, NULL);
 }
 
 static void update_coeff(struct FSMParser *parser, double *coeff)
 {
+    my_assert(parser);
+    my_assert(coeff);
+
     *coeff += parser->k * parser->last_sign * parser->last_coeff;
 }
 
@@ -51,6 +63,8 @@ static void parse_and_update_coeff(struct FSMParser *parser, double *coeff)
 
 int process_start_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (isdigit(c))
     {
         set_state(parser, INTEGER_PART);
@@ -72,6 +86,8 @@ int process_start_state(struct FSMParser *parser, char c)
 
 int process_integer_part_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (process_fraction_part_state(parser, c))
         return 1;
 
@@ -85,6 +101,8 @@ int process_integer_part_state(struct FSMParser *parser, char c)
 
 int process_dot_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (isdigit(c))
     {
         set_state(parser, FRACTION_PART);
@@ -95,6 +113,8 @@ int process_dot_state(struct FSMParser *parser, char c)
 
 int process_fraction_part_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (isdigit(c))
     {
         ;
@@ -131,6 +151,8 @@ int process_fraction_part_state(struct FSMParser *parser, char c)
 
 int process_variable_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (c == '^')
     {
         set_state(parser, POW);
@@ -162,6 +184,8 @@ int process_variable_state(struct FSMParser *parser, char c)
 
 int process_add_sub_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (isdigit(c))
     {
         parser->num_start_index = parser->curr_index;
@@ -181,6 +205,8 @@ int process_add_sub_state(struct FSMParser *parser, char c)
 
 int process_eq_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (process_start_state(parser, c) || isspace(c))
         return 1;
     return 0;
@@ -188,6 +214,8 @@ int process_eq_state(struct FSMParser *parser, char c)
 
 int process_space_after_num_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (c == '+')
     {
         return set_add_sub_state(ADD, parser);
@@ -209,6 +237,8 @@ int process_space_after_num_state(struct FSMParser *parser, char c)
 
 int process_pow_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     int pow = (int)(c - '0');
     if (isdigit(c) && pow <= MAX_POW)
     {
@@ -237,6 +267,8 @@ int process_pow_state(struct FSMParser *parser, char c)
 
 int process_pow_num_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (isspace(c))
     {
         set_state(parser, SPACE_AFTER_NUM);
@@ -259,6 +291,8 @@ int process_pow_num_state(struct FSMParser *parser, char c)
 
 int process_space_after_variable_state(struct FSMParser *parser, char c)
 {
+    my_assert(parser);
+
     if (process_space_after_num_state(parser, c))
         return 1;
     else if (c == '^')

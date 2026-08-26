@@ -322,7 +322,7 @@ static int run_test(struct FSMParserTestCase test_case)
 
     if (!s)
     {
-        printf("%sMemory error while testing, test FAILDE%s", RED_C, RESET_C);
+        printf("%sMemory error while testing, test FAILDE%s\n", RED_C, RESET_C);
         return 0;
     }
 

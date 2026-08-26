@@ -12,6 +12,8 @@
 
 void get_coeffs_in_loop(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     int parsing_status = 0;
 
     while (1)
@@ -49,6 +51,8 @@ void print_boobs(int n_whitespaces)
 
 int pretty_parse_coeffs(struct QuadraticEquation *equation)
 {
+    my_assert(equation);
+
     printf("%s%s%s", CYAN_C, ARROW_S, RESET_C);
 
     char s[BUFFERSIZE] = {};

@@ -8,6 +8,8 @@
 или NULL в случае успешного парсинга */
 static char *parse(struct FSMParser *parser)
 {
+    my_assert(parser);
+
     char c = 0;
     char *pc = NULL;
 
@@ -96,6 +98,8 @@ static const char *get_str_state(enum FSMStates state)
 
 void print_fsmparser(struct FSMParser *parser)
 {
+    my_assert(parser);
+
     printf("Parser data:\n"
            ".s = %s\n"
            ".state = %s\n"
