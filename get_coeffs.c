@@ -33,7 +33,7 @@ void print_logo(void)
 
 void print_greeting(void)
 {
-    print_phrase(GREETING_S);
+    print_and_say_phrase(GREETING_S);
     printf("\n");
 }
 
@@ -68,7 +68,7 @@ int pretty_parse_coeffs(struct QuadraticEquation *equation)
         int ind = (int)(c - s);
         print_boobs(ind + (int)strlen(ARROW_S) - 3);
         printf("\n");
-        print_phrase(ERROR_S);
+        print_and_say_phrase(ERROR_S);
     }
     printf("\n");
     return !c;

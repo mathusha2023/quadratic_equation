@@ -152,9 +152,9 @@ void process_roots_with_pretty_print(struct QuadraticEquation *equation)
 {
     my_assert(equation);
 
-    print_phrase(THINKING_S);
+    print_and_say_phrase(THINKING_S);
     loading();
-    print_phrase(SOLVED_S);
+    print_and_say_phrase(SOLVED_S);
     printf("\n");
     print_answer_table(equation);
     printf(RESET_C);
