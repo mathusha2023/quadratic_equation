@@ -7,43 +7,49 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fsm_parser.h"
+#include "strings.h"
+#include "files.h"
 
-void get_coeffs_in_loop(struct QuadraticEquation *equation, int (*pfunction)(struct QuadraticEquation *equation))
+void get_coeffs_in_loop(struct QuadraticEquation *equation)
 {
-    int parsing_status = 0, c = 0;
+    int parsing_status = 0;
 
     while (1)
     {
-        parsing_status = (*pfunction)(equation);
+        parsing_status = pretty_parse_coeffs(equation);
         if (parsing_status)
             return;
-        while ((c = getchar()) != '\n' && c != EOF)
-            ;
-        printf("%sEnter correct coefficients!\n\n%s", RED_C, RESET_C);
     }
 }
 
-int get_coeffs(struct QuadraticEquation *equation)
+void print_logo(void)
 {
-    my_assert(equation);
-
-    printf("%sEnter coefficients\n", BLUE_C);
-    printf("Input format shiould be\n");
-    printf("%%a %%b %%c\n%s", RESET_C);
-
-    int res = scanf("%lg %lg %lg", &equation->a, &equation->b, &equation->c);
-    int c = getchar();
-    return res == 3 && isspace(c);
+    if (!print_file(START_F, BLUE_C))
+        return;
+    printf("\n\n\n");
 }
 
-int parse_coeffs_from_equation(struct QuadraticEquation *equation)
+void print_greeting(void)
 {
-    my_assert(equation);
+    print_phrase(GREETING_S);
+    printf("\n");
+}
 
-    printf("%sEnter your equation:\n", BLUE_C);
-    printf("Format: ax^2 + bx + c = 0\n");
-    printf("Note: valid input may be ax^2 + bx + c = dx^2 + fx + g\n");
-    printf("Your equation: %s", RESET_C);
+void print_boobs(int n_whitespaces)
+{
+    char boobs_arr[][9] = {
+        " /\\_/\\ \n",
+        "( o.o )\n",
+        " > ^ < \n"};
+    printf(RED_C);
+    for (int i = 0; i < 3; i++)
+        printf("%*c%s", n_whitespaces, ' ', boobs_arr[i]);
+    printf(RESET_C);
+}
+
+int pretty_parse_coeffs(struct QuadraticEquation *equation)
+{
+    printf("%s%s%s", CYAN_C, ARROW_S, RESET_C);
 
     char s[BUFFERSIZE] = {};
     if (!fgets(s, BUFFERSIZE, stdin))
@@ -56,10 +62,10 @@ int parse_coeffs_from_equation(struct QuadraticEquation *equation)
     if (c)
     {
         int ind = (int)(c - s);
-        printf("Incorrect input:\n");
-        printf("%s", s);
-        printf("%s%*c <- incorrect symbol\n%s", RED_C, ind + 1, '^', RESET_C);
-        ungetc('\n', stdin);
+        print_boobs(ind + (int)strlen(ARROW_S) - 3);
+        printf("\n");
+        print_phrase(ERROR_S);
     }
+    printf("\n");
     return !c;
 }

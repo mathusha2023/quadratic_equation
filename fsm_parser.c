@@ -117,6 +117,11 @@ void print_fsmparser(struct FSMParser *parser)
 struct FSMParser init_fsmparser(char *s, struct QuadraticEquation *equation)
 {
     my_assert(s);
+    my_assert(equation);
+
+    equation->a = 0;
+    equation->b = 0;
+    equation->c = 0;
 
     struct FSMParser parser =
         {.s = s,

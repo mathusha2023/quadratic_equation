@@ -13,12 +13,18 @@
 #define GREEN_C use_color("\x1b[32m")
 #define BLUE_C use_color("\x1b[34m")
 #define YELLOW_C use_color("\x1b[33m")
+#define CYAN_C use_color("\x1b[36m")
 // colors block end
 
 // cmd args block
 #define TEST_ARG "--test"
 #define DISABLE_COLORS_ARG "--disable-colors"
+#define DISABLE_OUTPUT_DELAY_ARG "--disable-output-delay"
 // cmd args block end
+
+// file path block
+#define START_F "ascii_arts/start.txt"
+// file path block end
 
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;

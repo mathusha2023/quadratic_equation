@@ -7,6 +7,7 @@ struct CmdArgs
 {
     int test;
     int colors;
+    int output_delay;
 };
 
 void get_args(int argc, char *argv[]);

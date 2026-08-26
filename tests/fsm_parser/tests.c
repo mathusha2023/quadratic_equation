@@ -311,11 +311,21 @@ static const struct FSMParserTestCase test_cases[] = {
     {.num = 85,
      .s = "  x^2+2x+1=0  ",
      .error_index = 0},
-};
+    {.num = 86,
+     .s = "x^2 + 2x^2 = 3",
+     .error_index = -1,
+     .equation = {.a = 3, .c = -3}}};
 
 static int run_test(struct FSMParserTestCase test_case)
 {
     char *s = (char *)calloc(strlen(test_case.s) + 1, sizeof(char));
+
+    if (!s)
+    {
+        printf("%sMemory error while testing, test FAILDE%s", RED_C, RESET_C);
+        return 0;
+    }
+
     strcpy(s, test_case.s);
 
     struct QuadraticEquation eq = {.n_roots = NO_REAL_ROOTS};
