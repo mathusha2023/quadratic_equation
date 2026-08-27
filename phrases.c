@@ -1,4 +1,4 @@
-#include "strings.h"
+#include "phrases.h"
 #include <stdio.h>
 #include <unistd.h>
 #include "config.h"

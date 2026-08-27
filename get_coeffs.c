@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fsm_parser.h"
-#include "strings.h"
+#include "phrases.h"
 #include "files.h"
 
 void get_coeffs_in_loop(struct QuadraticEquation *equation)

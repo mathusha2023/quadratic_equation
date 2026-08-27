@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "solve_equation.h"
 #include "config.h"
-#include "strings.h"
+#include "phrases.h"
 #include "files.h"
 #include "my_assert.h"
 #include "graph.h"
