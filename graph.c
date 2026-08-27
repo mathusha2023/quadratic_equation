@@ -21,6 +21,32 @@ static int is_equal_on_graph(double a, double b, double scale_b)
     return b - scale_b / 4 < a && a < b + scale_b / 4;
 }
 
+// делаем первый коэффициент уравнения равным единице
+static void normilize_equation(struct QuadraticEquation *equation)
+{
+    my_assert(equation);
+
+    if (!d_is_equal(equation->a, 0))
+    {
+        equation->b /= equation->a;
+        equation->c /= equation->a;
+        equation->a /= equation->a;
+    }
+    else
+    {
+        if (!d_is_equal(equation->b, 0))
+        {
+            equation->c /= equation->b;
+            equation->b /= equation->b;
+        }
+        else
+        {
+            if (!d_is_equal(equation->c, 0))
+                equation->c /= equation->c;
+        }
+    }
+}
+
 static void draw_graph(double x_scale, double y_scale, struct QuadraticEquation *equation)
 {
     int x = 0, y = 0;
@@ -108,6 +134,7 @@ static void draw_parabola(struct QuadraticEquation *equation)
 void draw_quadratic_equation_graph(struct QuadraticEquation *equation)
 {
     my_assert(equation);
+    normilize_equation(equation);
 
     if (!d_is_equal(equation->a, 0))
         return draw_parabola(equation);
