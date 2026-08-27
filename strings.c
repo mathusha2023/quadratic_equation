@@ -35,7 +35,10 @@ void say(const char *s)
     const char *command_end = "\" &";
     char *p = (char *)calloc(strlen(command_start) + strlen(s) + strlen(command_end) + 1, sizeof(char));
     if (!p)
+    {
+        printf("%sMEMORY ERROR BROO!!!!!!!\n%s", RED_C, RESET_C);
         return;
+    }
 
     int i = 0, j = 0;
 

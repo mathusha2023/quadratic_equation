@@ -7,6 +7,7 @@
 #include "strings.h"
 #include "files.h"
 #include "my_assert.h"
+#include "graph.h"
 
 static double normilize_zero(double x)
 {
@@ -157,5 +158,7 @@ void process_roots_with_pretty_print(struct QuadraticEquation *equation)
     print_and_say_phrase(SOLVED_S);
     printf("\n");
     print_answer_table(equation);
-    printf(RESET_C);
+    printf("\n");
+    draw_quadratic_equation_graph(equation);
+    printf("\n");
 }
