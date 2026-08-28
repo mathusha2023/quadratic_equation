@@ -30,6 +30,8 @@
 #define DISABLE_OUTPUT_DELAY_ARG "--disable-output-delay"
 #define DISABLE_SPEECH_ARG "--disable-speech"
 #define DISABLE_GRAPH_ARG "--disable-graph"
+#define DISABLE_ASCII_ARTS "--disable-ascii-arts"
+#define DISABLE_ALL "--disable-all"
 // cmd args block end
 
 // file path block

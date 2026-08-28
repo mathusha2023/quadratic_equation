@@ -276,7 +276,8 @@ void process_roots_with_pretty_print(struct QuadraticEquation *equation)
     loading();
     print_and_say_phrase(SOLVED_S);
     printf("\n");
-    print_equation_in_ascii_art(equation);
+    if (ARGS.ascii_arts)
+        print_equation_in_ascii_art(equation);
     printf("\n");
     print_answer_table(equation);
     printf("\n");

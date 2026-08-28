@@ -9,7 +9,8 @@ struct CmdArgs ARGS = {
     .colors = 1,
     .output_delay = 1,
     .speech = 1,
-    .graph = 1};
+    .graph = 1,
+    .ascii_arts = 1};
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +21,9 @@ int main(int argc, char *argv[])
 
     struct QuadraticEquation equation = {.n_roots = NO_REAL_ROOTS};
 
-    print_logo();
+    if (ARGS.ascii_arts)
+        print_logo();
+
     print_greeting();
     get_coeffs_in_loop(&equation);
     solve_quadratic_equation(&equation);

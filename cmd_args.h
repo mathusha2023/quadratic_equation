@@ -10,6 +10,7 @@ struct CmdArgs
     int output_delay;
     int speech;
     int graph;
+    int ascii_arts;
 };
 
 void get_args(int argc, char *argv[]);
