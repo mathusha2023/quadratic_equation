@@ -2,7 +2,7 @@
 
 const int X_AXIS_LEN = 80;
 const int Y_AXIS_LEN = 40;
-const double MIN_SCALE = 1e-6;
+const double BASE_SCALE = 1;
 
 struct Point
 {

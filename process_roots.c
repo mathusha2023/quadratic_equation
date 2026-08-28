@@ -238,7 +238,8 @@ static void print_equation_in_ascii_art(struct QuadraticEquation *equation)
                                           ['+'] = ADD_F,
                                           ['='] = EQ_F,
                                           ['^'] = POW_F,
-                                          ['x'] = X_F};
+                                          ['x'] = X_F,
+                                          ['e'] = E_F};
 
     printf(BLUE_C);
     disable_line_break();

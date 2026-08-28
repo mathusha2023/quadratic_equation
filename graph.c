@@ -4,11 +4,6 @@
 #include "my_assert.h"
 #include "config.h"
 
-static double max(double a, double b)
-{
-    return a > b ? a : b;
-}
-
 static double f(double x, struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -18,7 +13,8 @@ static double f(double x, struct QuadraticEquation *equation)
 
 static int is_equal_on_graph(double a, double b, double scale_b)
 {
-    return b - scale_b / 4 < a && a < b + scale_b / 4;
+    double scale_k = 0.1;
+    return b - scale_b * scale_k < a && a < b + scale_b * scale_k;
 }
 
 // делаем первый коэффициент уравнения равным единице
@@ -28,21 +24,21 @@ static void normilize_equation(struct QuadraticEquation *equation)
 
     if (!d_is_equal(equation->a, 0))
     {
-        equation->b /= equation->a;
-        equation->c /= equation->a;
-        equation->a /= equation->a;
+        equation->b /= fabs(equation->a);
+        equation->c /= fabs(equation->a);
+        equation->a /= fabs(equation->a);
     }
     else
     {
         if (!d_is_equal(equation->b, 0))
         {
-            equation->c /= equation->b;
-            equation->b /= equation->b;
+            equation->c /= fabs(equation->b);
+            equation->b /= fabs(equation->b);
         }
         else
         {
             if (!d_is_equal(equation->c, 0))
-                equation->c /= equation->c;
+                equation->c /= fabs(equation->c);
         }
     }
 }
@@ -84,8 +80,11 @@ static void draw_graph(double x_scale, double y_scale, struct QuadraticEquation 
 
 static double get_scale(double point, int axis_len)
 {
-    int scale_factor = 8;
-    return max(fabs(point * scale_factor / axis_len), MIN_SCALE);
+    int scale_factor = 4;
+
+    if (!d_is_equal(point, 0))
+        return fabs(point * scale_factor / axis_len);
+    return BASE_SCALE;
 }
 
 static void draw_horizontal_line(struct QuadraticEquation *equation)

@@ -52,6 +52,7 @@
 #define SUB_F "ascii_arts/sub.txt"
 #define EQ_F "ascii_arts/eq.txt"
 #define X_F "ascii_arts/x.txt"
+#define E_F "ascii_arts/e.txt"
 // file path block end
 
 // line break block
