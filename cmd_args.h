@@ -9,6 +9,7 @@ struct CmdArgs
     int colors;
     int output_delay;
     int speech;
+    int graph;
 };
 
 void get_args(int argc, char *argv[]);

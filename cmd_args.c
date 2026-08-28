@@ -14,5 +14,7 @@ void get_args(int argc, char *argv[])
             ARGS.output_delay = 0;
         if (!strcmp(arg, DISABLE_SPEECH_ARG))
             ARGS.speech = 0;
+        if (!strcmp(arg, DISABLE_GRAPH_ARG))
+            ARGS.graph = 0;
     }
 }

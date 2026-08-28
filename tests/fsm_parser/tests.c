@@ -398,9 +398,9 @@ int run_fsm_parser_tests(void)
 
     printf("End parser testing\n");
     printf("%sPassed: %d/%d tests\n\n%s",
-           are_all_passed ? "\x1b[32m" : "\x1b[31m",
+           are_all_passed ? GREEN_COLOR : RED_COLOR,
            passed, test_count,
-           "\x1b[0m");
+           RESET_COLOR);
 
     return are_all_passed;
 }

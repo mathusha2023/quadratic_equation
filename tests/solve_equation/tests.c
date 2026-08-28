@@ -268,6 +268,7 @@ static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *
 {
     my_assert(eq1);
     my_assert(eq2);
+    my_assert(eq1 != eq2);
     my_assert(isfinite(eq1->x1));
     my_assert(isfinite(eq1->x2));
     my_assert(isfinite(eq2->x1));
@@ -337,9 +338,9 @@ int run_equation_tests(void)
 
     printf("End quadratic equations testing\n");
     printf("%sPassed: %d/%d tests\n\n%s",
-           are_all_passed ? "\x1b[32m" : "\x1b[31m",
+           are_all_passed ? GREEN_COLOR : RED_COLOR,
            passed, test_count,
-           "\x1b[0m");
+           RESET_COLOR);
 
     return are_all_passed;
 }

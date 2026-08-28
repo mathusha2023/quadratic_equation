@@ -4,6 +4,16 @@
 #include "my_assert.h"
 #include "fsm_parser_processes.h"
 
+static int check_correct_end_parsing(struct FSMParser *parser)
+{
+    my_assert(parser);
+
+    // если k = -1, то равно было встречено ровно 1 раз
+    return parser->k == -1 && parser->state != EQ &&
+           parser->state != ADD && parser->state != SUB &&
+           parser->state != DOT && parser->state != POW;
+}
+
 /* возвращает указатель на первый некорректный символ
 или NULL в случае успешного парсинга */
 static char *parse(struct FSMParser *parser)
@@ -13,8 +23,9 @@ static char *parse(struct FSMParser *parser)
     char c = 0;
     char *pc = NULL;
 
-    for (parser->curr_index = 0; (c = (char)tolower(parser->s[parser->curr_index])); parser->curr_index++)
+    for (parser->curr_index = 0; parser->s[parser->curr_index]; parser->curr_index++)
     {
+        c = (char)tolower(parser->s[parser->curr_index]);
         pc = &parser->s[parser->curr_index];
 
         switch (parser->state)
@@ -71,12 +82,7 @@ static char *parse(struct FSMParser *parser)
             return pc;
         }
     }
-
-    // если k = -1, то равно было встречено ровно 1 раз
-    return (parser->k == -1 && parser->state != EQ &&
-            parser->state != ADD && parser->state != SUB && parser->state != DOT)
-               ? NULL
-               : &parser->s[parser->curr_index];
+    return check_correct_end_parsing(parser) ? NULL : &parser->s[parser->curr_index];
 }
 
 static const char *get_str_state(enum FSMStates state)

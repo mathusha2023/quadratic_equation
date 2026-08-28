@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include "solve_equation.h"
 #include "config.h"
 #include "phrases.h"
@@ -31,8 +32,30 @@ static const char *get_str_roots_count(enum RootsCount count)
     }
 }
 
-void pretty_print_equation(struct QuadraticEquation *equation)
+static int add_symb_to_str(char **s, size_t *s_size, const char *symb, ...)
 {
+    my_assert(s);
+    my_assert(*s);
+    my_assert(s_size);
+    my_assert(symb);
+
+    va_list args = {};
+    va_start(args, symb);
+    int res = vsnprintf(*s, *s_size, symb, args);
+    va_end(args);
+
+    my_assert(res > 0 && (size_t)res < *s_size);
+
+    if (res < 0 || (size_t)res > *s_size)
+        return 0;
+    *s_size -= (size_t)res;
+    *s += res;
+    return 1;
+}
+
+static int make_pretty_eq(char *s, struct QuadraticEquation *equation, size_t s_size)
+{
+    my_assert(s);
     my_assert(equation);
 
     if (!d_is_equal(equation->a, 0))
@@ -40,28 +63,40 @@ void pretty_print_equation(struct QuadraticEquation *equation)
         if (d_is_equal(equation->a, 1))
             ;
         else if (d_is_equal(equation->a, -1))
-            printf("-");
+        {
+            if (!add_symb_to_str(&s, &s_size, "-"))
+                return 0;
+        }
         else
-            printf("%lg", equation->a);
+        {
+            if (!add_symb_to_str(&s, &s_size, "%lg", equation->a))
+                return 0;
+        }
 
-        printf("x^2");
+        if (!add_symb_to_str(&s, &s_size, "x^2"))
+            return 0;
 
         if (!d_is_equal(equation->b, 0)) // b != 0
         {
-            printf(" %c ", equation->b > 0 ? '+' : '-');
+            if (!add_symb_to_str(&s, &s_size, " %c ", equation->b > 0 ? '+' : '-'))
+                return 0;
 
             if (d_is_equal(fabs(equation->b), 1))
                 ;
             else
-                printf("%lg", fabs(equation->b));
+            {
+                if (!add_symb_to_str(&s, &s_size, "%lg", fabs(equation->b)))
+                    return 0;
+            }
 
-            printf("x");
+            if (!add_symb_to_str(&s, &s_size, "x"))
+                ;
         }
 
         if (!d_is_equal(equation->c, 0))
         {
-            printf(" %c ", equation->c > 0 ? '+' : '-');
-            printf("%lg", fabs(equation->c));
+            if (!add_symb_to_str(&s, &s_size, " %c %lg", equation->c > 0 ? '+' : '-', fabs(equation->c)))
+                return 0;
         }
     }
     else // a = 0
@@ -71,25 +106,51 @@ void pretty_print_equation(struct QuadraticEquation *equation)
             if (d_is_equal(equation->b, 1))
                 ;
             else if (d_is_equal(equation->b, -1))
-                printf("-");
+            {
+                if (!add_symb_to_str(&s, &s_size, "-"))
+                    return 0;
+            }
             else
-                printf("%lg", equation->b);
+            {
+                if (!add_symb_to_str(&s, &s_size, "%lg", equation->b))
+                    return 0;
+            }
 
-            printf("x");
+            if (!add_symb_to_str(&s, &s_size, "x"))
+                return 0;
 
             if (!d_is_equal(equation->c, 0))
             {
-                printf(" %c ", equation->c > 0 ? '+' : '-');
-                printf("%lg", fabs(equation->c));
+                if (!add_symb_to_str(&s, &s_size, " %c %lg", equation->c > 0 ? '+' : '-', fabs(equation->c)))
+                    return 0;
             }
         }
         else // a = 0, b = 0
         {
-            printf("%lg", equation->c);
+            if (!add_symb_to_str(&s, &s_size, "%lg", equation->c))
+                return 0;
         }
     }
 
-    printf(" = 0\n");
+    if (!add_symb_to_str(&s, &s_size, " = 0\n"))
+        return 0;
+
+    return 1;
+}
+
+void pretty_print_equation(struct QuadraticEquation *equation)
+{
+    my_assert(equation);
+
+    char *s = (char *)calloc(BUFFERSIZE, sizeof(char));
+    if (!s)
+    {
+        printf("%sMemory ERROR!!!!\n%s", RED_C, RESET_C);
+        return;
+    }
+    make_pretty_eq(s, equation, BUFFERSIZE);
+    printf("%s", s);
+    free(s);
 }
 
 static int print_answer_table(struct QuadraticEquation *equation)
@@ -117,7 +178,7 @@ static int print_answer_table(struct QuadraticEquation *equation)
         printf("x1 = %lg, x2 = %lg\n", normilize_zero(equation->x1), normilize_zero(equation->x2));
         break;
     default:
-        printf("Ошибка\n" RESET_C);
+        printf("Ошибка\n%s", RESET_C);
         return 0;
     }
     printf("%s", RESET_C);
@@ -146,7 +207,65 @@ static void loading(void)
             usleep((int)1e6 * sleep_time / n_ticks); // microseconds
         }
     }
-    printf("\n" RESET_C);
+    printf("\n%s", RESET_C);
+}
+
+static void print_equation_in_ascii_art(struct QuadraticEquation *equation)
+{
+    my_assert(equation);
+
+    char *s = (char *)calloc(BUFFERSIZE, sizeof(char));
+    if (!s)
+    {
+        printf("%sMemory ERROR!!!!\n%s", RED_C, RESET_C);
+        return;
+    }
+    make_pretty_eq(s, equation, BUFFERSIZE);
+    const int files_length = 5;
+
+    static const char *file_names[256] = {['0'] = N0_F,
+                                          ['1'] = N1_F,
+                                          ['2'] = N2_F,
+                                          ['3'] = N3_F,
+                                          ['4'] = N4_F,
+                                          ['5'] = N5_F,
+                                          ['6'] = N6_F,
+                                          ['7'] = N7_F,
+                                          ['8'] = N8_F,
+                                          ['9'] = N9_F,
+                                          ['.'] = DOT_F,
+                                          ['-'] = SUB_F,
+                                          ['+'] = ADD_F,
+                                          ['='] = EQ_F,
+                                          ['^'] = POW_F,
+                                          ['x'] = X_F};
+
+    printf(BLUE_C);
+    disable_line_break();
+
+    for (int i = 0; i < files_length; i++)
+    {
+        for (int j = 0; j < s[j]; j++)
+        {
+            const char *file = NULL;
+            file = file_names[(int)s[j]];
+            if (file)
+            {
+                if (!print_n_file_string(file, i, 0))
+                {
+                    printf("%sFile erorr!\n%s", RED_C, RESET_C);
+                    free(s);
+                    return;
+                }
+                putchar(' ');
+            }
+        }
+        printf("\n");
+    }
+    enable_line_break();
+    printf(RESET_C);
+
+    free(s);
 }
 
 void process_roots_with_pretty_print(struct QuadraticEquation *equation)
@@ -157,8 +276,11 @@ void process_roots_with_pretty_print(struct QuadraticEquation *equation)
     loading();
     print_and_say_phrase(SOLVED_S);
     printf("\n");
+    print_equation_in_ascii_art(equation);
+    printf("\n");
     print_answer_table(equation);
     printf("\n");
-    draw_quadratic_equation_graph(equation);
+    if (ARGS.graph)
+        draw_quadratic_equation_graph(equation);
     printf("\n");
 }

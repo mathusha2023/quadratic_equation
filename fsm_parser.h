@@ -1,7 +1,7 @@
-#include "solve_equation.h"
-
 #ifndef FSM_PARSER_H
 #define FSM_PARSER_H
+
+#include "solve_equation.h"
 
 enum FSMStates
 {
