@@ -77,7 +77,7 @@ PROJECT_ICON           =
 # Если введен относительный путь, он будет относительным к месту запуска
 # Doxygen. Если оставить пустым, будет использоваться текущий каталог.
 
-OUTPUT_DIRECTORY       = /Users/aleksej/VSCodeProjects/quadratic_equation/docs
+OUTPUT_DIRECTORY       = ./docs
 
 # Если тег CREATE_SUBDIRS установлен в YES, Doxygen создаст до 4096 подкаталогов
 # (на 2 уровнях) в выходном каталоге каждого выходного формата и распределит
@@ -1516,7 +1516,7 @@ HTML_STYLESHEET        =
 # добавить явно.Пример см. в документации.
 # Этот тег требует, чтобы тег GENERATE_HTML был установлен в YES.
 
-HTML_EXTRA_STYLESHEET  =
+HTML_EXTRA_STYLESHEET  = doxygen-awesome-css/doxygen-awesome.css
 
 # Тег HTML_EXTRA_FILES можно использовать для указания одного или нескольких
 # дополнительных изображений или других исходных файлов, которые должны быть
