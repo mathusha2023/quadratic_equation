@@ -43,6 +43,9 @@ jobs:
 
       - name: Create documentation
         run: doxygen
+      - name: Kill Jekyll
+        run: touch .nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
