@@ -41,7 +41,7 @@ jobs:
       - name: Clone stylesheet
         run: sudo git clone https://github.com/jothepro/doxygen-awesome-css
       - name: Install README as main page
-        run: sed -i '1i @mainpage\n' README.md
+        run: sed -i '1i @mainpage' README.md
 
       - name: Create documentation
         run: doxygen

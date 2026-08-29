@@ -80,7 +80,7 @@ ax^2 + bx + c = dx^2 + ex + f
 5. **Уравнение с отрицательными коэффициентами**  
    `-x^2 + 4x - 4 = -2x^2 + 8`
 
-6. **Уравнение со степенями меньше 2**
+6. **Уравнение со степенями меньше 2**  
    `x^1 = x^2 - 5x^0 + 10`
 
 ---
@@ -120,7 +120,9 @@ ax^2 + bx + c = dx^2 + ex + f
 ## 📞 Контакты
 
 **Автор:** [@mathusha2023](https://t.me/mathusha2023)  
-**Telegram:** [написать](https://t.me/mathusha2023)
+**Github:** [ссылка](https://github.com/mathusha2023)  
+**Telegram:** [ссылка](https://t.me/mathusha2023)  
+**VK:** [ссылка](https://vk.ru/mathusha2023)
 
 ---
 
