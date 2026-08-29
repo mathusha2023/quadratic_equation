@@ -5,6 +5,15 @@
 #include <stdlib.h>
 #include "config.h"
 
+/**
+ * @brief My assertation function
+ *
+ * @param condition Condition to check
+ *
+ * If the condition is false, the program will print an error message
+ * with the file and line number of error and exit
+ *
+ */
 #define my_assert(condition)                                                      \
     {                                                                             \
         if (!(condition))                                                         \

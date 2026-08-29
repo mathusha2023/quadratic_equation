@@ -12,9 +12,10 @@
 #define CYAN_COLOR "\x1b[36m"
 #define RESET_COLOR "\x1b[0m"
 
+// Macros that check if ARGS.colors = 1 and returns color or no color
 #define use_color(color) (ARGS.colors ? color : RESET_COLOR)
 
-// цвета которые выключаются если передан такой аргумент
+// Colors that paint console only if ARGS.colors = 1
 #define RED_C use_color(RED_COLOR)
 #define GREEN_C use_color(GREEN_COLOR)
 #define BLUE_C use_color(BLUE_COLOR)
@@ -64,10 +65,19 @@ const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
 
-// глобальная для всей программы переменная,
-// которая будет содержать аргументы командной строки после запуска программы
+/**
+ * @brief Global variable with cmd args
+ *
+ * This variable saves all running arguments. Its global because all parts of program
+ * need it, especially macros use_color(color). This variable ensures correct colors settings.
+ * The initialization with default values is in main.c, but get_args() change this with got args
+ *
+ * @warning This variable is global. Dont change it after using get_args()!!!
+ *
+ */
 extern struct CmdArgs ARGS;
 
+// check if equal two [double]
 #define d_is_equal(a, b) (fabs((a) - (b)) < EPSILON)
 
 #endif // CONFIG_H

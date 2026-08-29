@@ -10,20 +10,6 @@
 #include "phrases.h"
 #include "files.h"
 
-void get_coeffs_in_loop(struct QuadraticEquation *equation)
-{
-    my_assert(equation);
-
-    int parsing_status = 0;
-
-    while (1)
-    {
-        parsing_status = pretty_parse_coeffs(equation);
-        if (parsing_status)
-            return;
-    }
-}
-
 void print_logo(void)
 {
     if (!print_file(START_F, BLUE_C))
@@ -37,7 +23,14 @@ void print_greeting(void)
     printf("\n");
 }
 
-void print_boobs(int n_whitespaces)
+/**
+ * @brief Print boobs
+ *
+ * This function prints boobs - cat that show user where is wrong char in his input
+ *
+ * @param n_whitespaces number of whitespaces before boobs
+ */
+static void print_boobs(int n_whitespaces)
 {
     char boobs_arr[][9] = {
         " /\\_/\\ \n",
@@ -49,7 +42,16 @@ void print_boobs(int n_whitespaces)
     printf(RESET_C);
 }
 
-int pretty_parse_coeffs(struct QuadraticEquation *equation)
+/**
+ * @brief Pretty parse coeffs
+ *
+ * This function get coeffs from console and put them to equation.
+ * If input is incorrect - print boobs
+ *
+ * @param equation
+ * @return int
+ */
+static int pretty_parse_coeffs(struct QuadraticEquation *equation)
 {
     my_assert(equation);
 
@@ -72,4 +74,18 @@ int pretty_parse_coeffs(struct QuadraticEquation *equation)
     }
     printf("\n");
     return !c;
+}
+
+void get_coeffs_in_loop(struct QuadraticEquation *equation)
+{
+    my_assert(equation);
+
+    int parsing_status = 0;
+
+    while (1)
+    {
+        parsing_status = pretty_parse_coeffs(equation);
+        if (parsing_status)
+            return;
+    }
 }

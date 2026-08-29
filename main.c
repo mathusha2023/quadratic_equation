@@ -5,6 +5,7 @@
 #include "cmd_args.h"
 #include "tests/tests.h"
 
+/// @brief Global variable of allowed cmd args
 struct CmdArgs ARGS = {
     .colors = 1,
     .output_delay = 1,

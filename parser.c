@@ -1,5 +1,9 @@
-// Deprecated Parser
-
+/**
+ * @file
+ *
+ * @deprecated This parser is deprecated, please use FSMParser
+ *
+ */
 #include "parser.h"
 #include <stdio.h>
 #include <ctype.h>

@@ -10,11 +10,26 @@
 #include "my_assert.h"
 #include "graph.h"
 
+/**
+ * @brief Normilize zero
+ *
+ * If the number is close to zero, then it will be replaced with 0
+ * It makes because double type has a limited precision
+ *
+ * @param x
+ * @return double
+ */
 static double normilize_zero(double x)
 {
     return fabs(x) < EPSILON ? 0.0 : x;
 }
 
+/**
+ * @brief Get the str roots count object
+ *
+ * @param count
+ * @return const char*
+ */
 static const char *get_str_roots_count(enum RootsCount count)
 {
     switch (count)
@@ -32,6 +47,17 @@ static const char *get_str_roots_count(enum RootsCount count)
     }
 }
 
+/**
+ * @brief Add formated string in the end of another string
+ *
+ * This function works like sprintf and save buffer from overflow
+ *
+ * @param [out]s in this string will be added formatted string
+ * @param s_size size of allowed s space
+ * @param [in]symb formatted string will be added to s
+ * @param ... additional arguments
+ * @return int 1 if successfully added else 0
+ */
 static int add_symb_to_str(char **s, size_t *s_size, const char *symb, ...)
 {
     my_assert(s);
@@ -53,6 +79,19 @@ static int add_symb_to_str(char **s, size_t *s_size, const char *symb, ...)
     return 1;
 }
 
+/**
+ * @brief Make string with equation in base format
+ *
+ * This function make string with equation in base format (ax^2 + bx + c = 0)
+ * For example:
+ * -x^2 + 2x + 3 = 0
+ * x^2 - 2x = 0
+ *
+ * @param [out]s
+ * @param equation
+ * @param s_size
+ * @return int
+ */
 static int make_pretty_eq(char *s, struct QuadraticEquation *equation, size_t s_size)
 {
     my_assert(s);
@@ -137,8 +176,14 @@ static int make_pretty_eq(char *s, struct QuadraticEquation *equation, size_t s_
 
     return 1;
 }
-
-void pretty_print_equation(struct QuadraticEquation *equation)
+/**
+ * @brief Print equation in base format
+ *
+ * This function print the result of make_pretty_eq()
+ *
+ * @param equation
+ */
+static void pretty_print_equation(struct QuadraticEquation *equation)
 {
     my_assert(equation);
 
@@ -153,6 +198,12 @@ void pretty_print_equation(struct QuadraticEquation *equation)
     free(s);
 }
 
+/**
+ * @brief Print all information about equation and roots for user
+ *
+ * @param equation
+ * @return int 1 - success, 0 - error
+ */
 static int print_answer_table(struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -185,6 +236,12 @@ static int print_answer_table(struct QuadraticEquation *equation)
     return 1;
 }
 
+/**
+ * @brief Print loading animation
+ *
+ * @note If ARGS.output_delay = 0 this function will print all data without delay
+ *
+ */
 static void loading(void)
 {
     const int sleep_time = 4; // in seconds
@@ -210,6 +267,13 @@ static void loading(void)
     printf("\n%s", RESET_C);
 }
 
+/**
+ * @brief Print equation in console using ascii art
+ *
+ * @note This function need files with ascii arts
+ *
+ * @param equation
+ */
 static void print_equation_in_ascii_art(struct QuadraticEquation *equation)
 {
     my_assert(equation);

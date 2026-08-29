@@ -4,6 +4,16 @@
 #include "my_assert.h"
 #include "config.h"
 
+/**
+ * @brief Calculate f(x) = ax^2 + bx + c
+ *
+ * This function calculate the functions f(x) = ax^2 + bx + c
+ * in point x
+ *
+ * @param x
+ * @param equation
+ * @return double function value at point x
+ */
 static double f(double x, struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -11,13 +21,27 @@ static double f(double x, struct QuadraticEquation *equation)
     return equation->a * x * x + equation->b * x + equation->c;
 }
 
+/**
+ * @brief Check if a and b are equal on graph (+- 10% to scale of b)
+ *
+ * @param a
+ * @param b
+ * @param scale_b
+ * @return int 1 if equal else 0
+ */
 static int is_equal_on_graph(double a, double b, double scale_b)
 {
     double scale_k = 0.1;
     return b - scale_b * scale_k < a && a < b + scale_b * scale_k;
 }
 
-// делаем первый коэффициент уравнения равным единице
+/**
+ * @brief Normilize equation
+ *
+ * This function normilize equation (set leadig coefficient to 1 or -1)
+ *
+ * @param equation
+ */
 static void normilize_equation(struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -43,6 +67,13 @@ static void normilize_equation(struct QuadraticEquation *equation)
     }
 }
 
+/**
+ * @brief Draw quadratic equation graph using scale
+ *
+ * @param x_scale
+ * @param y_scale
+ * @param equation
+ */
 static void draw_graph(double x_scale, double y_scale, struct QuadraticEquation *equation)
 {
     int x = 0, y = 0;
@@ -78,6 +109,13 @@ static void draw_graph(double x_scale, double y_scale, struct QuadraticEquation 
     }
 }
 
+/**
+ * @brief Get the scale of axis using key point and axis length
+ *
+ * @param point
+ * @param axis_len
+ * @return double
+ */
 static double get_scale(double point, int axis_len)
 {
     int scale_factor = 4;
@@ -87,6 +125,13 @@ static double get_scale(double point, int axis_len)
     return BASE_SCALE;
 }
 
+/**
+ * @brief Draw horizontal line y = c
+ *
+ * @warning This function will not work if a != 0 or b != 0
+ *
+ * @param equation
+ */
 static void draw_horizontal_line(struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -98,6 +143,13 @@ static void draw_horizontal_line(struct QuadraticEquation *equation)
     draw_graph(x_scale, y_scale, equation);
 }
 
+/**
+ * @brief Draw line y = bx + c
+ *
+ * @warning This function will not work if a != 0
+ *
+ * @param equation
+ */
 static void draw_line(struct QuadraticEquation *equation)
 {
     my_assert(equation);
@@ -116,6 +168,13 @@ static void draw_line(struct QuadraticEquation *equation)
     draw_graph(x_scale, y_scale, equation);
 }
 
+/**
+ * @brief Draw parabola y = ax^2 + bx + c
+ *
+ * @warning This function will not work if a = 0
+ *
+ * @param equation
+ */
 static void draw_parabola(struct QuadraticEquation *equation)
 {
     my_assert(equation);

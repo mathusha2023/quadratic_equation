@@ -4,6 +4,12 @@
 #include "my_assert.h"
 #include "fsm_parser_processes.h"
 
+/**
+ * @brief Check if the end of string was parsed is correct
+ *
+ * @param parser
+ * @return int 1 if correct else 0
+ */
 static int check_correct_end_parsing(struct FSMParser *parser)
 {
     my_assert(parser);
@@ -14,8 +20,13 @@ static int check_correct_end_parsing(struct FSMParser *parser)
            parser->state != DOT && parser->state != POW;
 }
 
-/* возвращает указатель на первый некорректный символ
-или NULL в случае успешного парсинга */
+/**
+ * @brief Parse string to quadratic equation
+ *
+ * @param parser
+ * @return char* pointer to first incorrect symbol if there is else NULL
+ *
+ */
 static char *parse(struct FSMParser *parser)
 {
     my_assert(parser);
@@ -85,6 +96,12 @@ static char *parse(struct FSMParser *parser)
     return check_correct_end_parsing(parser) ? NULL : &parser->s[parser->curr_index];
 }
 
+/**
+ * @brief Get the str state object
+ *
+ * @param state
+ * @return const char*
+ */
 static const char *get_str_state(enum FSMStates state)
 {
     static const char *states_str[] = {"START",

@@ -7,6 +7,7 @@
 enum RootsCount solve_linear_equation(struct QuadraticEquation *equation)
 {
     my_assert(equation);
+    my_assert(d_is_equal(equation->a, 0.));
     my_assert(isfinite(equation->b));
     my_assert(isfinite(equation->c));
 

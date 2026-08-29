@@ -264,6 +264,13 @@ static const struct EquationTestCase test_cases[] = {
                   .n_roots = ONE_REAL_ROOT}},
 };
 
+/**
+ * @brief Check if equations answers are equal
+ *
+ * @param eq1
+ * @param eq2
+ * @return int 1 if equations are equal else 0
+ */
 static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *eq2)
 {
     my_assert(eq1);
@@ -279,6 +286,12 @@ static int check_equal(struct QuadraticEquation *eq1, struct QuadraticEquation *
             (d_is_equal(eq1->x1, eq2->x2) && d_is_equal(eq1->x2, eq2->x1)));
 }
 
+/**
+ * @brief Get the roots count str object
+ *
+ * @param n_roots
+ * @return const char*
+ */
 static const char *get_roots_count_str(enum RootsCount n_roots)
 {
     switch (n_roots)
@@ -296,6 +309,12 @@ static const char *get_roots_count_str(enum RootsCount n_roots)
     }
 }
 
+/**
+ * @brief Run one equations solver test
+ *
+ * @param test_case
+ * @return int 1 if passed else 0
+ */
 static int run_test(struct EquationTestCase test_case)
 {
     struct QuadraticEquation equation = {.a = test_case.equation.a,

@@ -5,6 +5,12 @@
 #include "config.h"
 #include "my_assert.h"
 
+/**
+ * @brief Set the state object to parser
+ *
+ * @param parser
+ * @param state
+ */
 static void set_state(struct FSMParser *parser, enum FSMStates state)
 {
     my_assert(parser);
@@ -12,6 +18,15 @@ static void set_state(struct FSMParser *parser, enum FSMStates state)
     parser->state = state;
 }
 
+/**
+ * @brief Set the eq state object to parser
+ *
+ * Set the eq state to parser, including changes in coeffs,
+ * and checks whether this was done previously
+ *
+ * @param parser
+ * @return int 1 if success else 0
+ */
 static int set_eq_state(struct FSMParser *parser)
 {
     my_assert(parser);
@@ -25,6 +40,15 @@ static int set_eq_state(struct FSMParser *parser)
     return 1;
 }
 
+/**
+ * @brief Set the add or sub state object to parser
+ *
+ * Set add or sub parser state and change its last sign
+ *
+ * @param state
+ * @param parser
+ * @return int 1 if success else 0
+ */
 static int set_add_sub_state(enum FSMStates state, struct FSMParser *parser)
 {
     my_assert(parser);
@@ -38,6 +62,13 @@ static int set_add_sub_state(enum FSMStates state, struct FSMParser *parser)
     return 0;
 }
 
+/**
+ * @brief Save last coeff from string
+ *
+ * Parse last coeff from parser string and save it
+ *
+ * @param parser
+ */
 static void parse_coeff(struct FSMParser *parser)
 {
     my_assert(parser);
@@ -45,6 +76,12 @@ static void parse_coeff(struct FSMParser *parser)
     parser->last_coeff = strtod(parser->s + parser->num_start_index, NULL);
 }
 
+/**
+ * @brief Add last saved coeff to transfered coeff (a, b or c)
+ *
+ * @param parser
+ * @param coeff
+ */
 static void update_coeff(struct FSMParser *parser, double *coeff)
 {
     my_assert(parser);
@@ -53,6 +90,12 @@ static void update_coeff(struct FSMParser *parser, double *coeff)
     *coeff += parser->k * parser->last_sign * parser->last_coeff;
 }
 
+/**
+ * @brief Combination of parse_coeff() and update_coeff()
+ *
+ * @param parser
+ * @param coeff
+ */
 static void parse_and_update_coeff(struct FSMParser *parser, double *coeff)
 {
     parse_coeff(parser);

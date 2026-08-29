@@ -316,6 +316,12 @@ static const struct FSMParserTestCase test_cases[] = {
      .error_index = -1,
      .equation = {.a = 3, .c = -3}}};
 
+/**
+ * @brief Run one parser test
+ *
+ * @param test_case
+ * @return int 1 if test passed else 0
+ */
 static int run_test(struct FSMParserTestCase test_case)
 {
     char *s = (char *)calloc(strlen(test_case.s) + 1, sizeof(char));
