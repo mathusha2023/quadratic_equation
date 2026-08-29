@@ -40,6 +40,8 @@ jobs:
         run: sudo apt install graphviz
       - name: Clone stylesheet
         run: sudo git clone https://github.com/jothepro/doxygen-awesome-css
+      - name: Install README as main page
+        run: sed -i '1i @mainpage\n' README.md
 
       - name: Create documentation
         run: doxygen
