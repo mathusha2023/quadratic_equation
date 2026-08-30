@@ -8,3 +8,4 @@ docs/html
 docs/latex
 doxygen-awesome-css
 raylib
+libraylib.a
