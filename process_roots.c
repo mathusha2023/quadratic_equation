@@ -58,7 +58,7 @@ static const char *get_str_roots_count(enum RootsCount count)
  * @param ... additional arguments
  * @return int 1 if successfully added else 0
  */
-static int add_symb_to_str(char **s, size_t *s_size, const char *symb, ...)
+static int __attribute__((format(printf, 3, 4))) add_symb_to_str(char **s, size_t *s_size, const char *symb, ...)
 {
     my_assert(s);
     my_assert(*s);

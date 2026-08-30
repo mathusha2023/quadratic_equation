@@ -109,11 +109,11 @@ ax^2 + bx + c = dx^2 + ex + f
 
 ## 📸 Скриншоты
 
-![Старт программы](docs/screenshots/start.png)
+![Старт программы](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/start.png?raw=true)
 
-![Решение уравнений](docs/screenshots/equation.png)
+![Решение уравнений](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/equation.png?raw=true)
 
-![Построенный график](docs/screenshots/graph.png)
+![Построенный график](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/graph.png?raw=true)
 
 ---
 
