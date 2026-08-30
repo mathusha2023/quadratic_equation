@@ -11,7 +11,8 @@ struct CmdArgs ARGS = {
     .output_delay = 1,
     .speech = 1,
     .ascii_arts = 1,
-    .ascii_graph = 1};
+    .ascii_graph = 1,
+    .graph_window = 1};
 
 int main(int argc, char *argv[])
 {

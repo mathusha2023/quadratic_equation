@@ -350,6 +350,6 @@ void process_roots_with_pretty_print(struct QuadraticEquation *equation)
     if (ARGS.ascii_graph)
         draw_quadratic_equation_graph(equation);
     if (ARGS.graph_window)
-        show_graph_window(equation);
+        show_graph_window();
     printf("\n");
 }

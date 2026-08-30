@@ -66,6 +66,8 @@
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HIGHT = 800;
 
 /**
  * @brief Global variable with cmd args
