@@ -95,9 +95,7 @@ ax^2 + bx + c = dx^2 + ex + f
 | `--disable-colors` | Отключить цветной вывод |
 | `--disable-output-delay` | Убрать задержку при печати |
 | `--disable-speech` | Отключить голосовое сопровождение |
-| `--disable-graph-window` | Не строить график в отдельном окне |
-| `--disable-ascii-graph` | Не строить график в консоли |
-| `--disable-graph` | Не строить графики вообще (эквивалентно `--disable-graph-window --disable-ascii-graph`)|
+| `--disable-graph` | Не строить график |
 | `--disable-ascii-arts` | Убрать ASCII-арты и декоративные элементы |
 | `--disable-all` | Отключить все дополнительные функции (эквивалентно `--disable-colors --disable-output-delay --disable-speech --disable-graph --disable-ascii-arts`) |
 
@@ -111,11 +109,11 @@ ax^2 + bx + c = dx^2 + ex + f
 
 ## 📸 Скриншоты
 
-![Старт программы](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/start.png?raw=true)
+![Старт программы](docs/screenshots/start.png)
 
-![Решение уравнений](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/equation.png?raw=true)
+![Решение уравнений](docs/screenshots/equation.png)
 
-![Построенный график](https://github.com/mathusha2023/quadratic_equation/blob/main/docs/screenshots/graph.png?raw=true)
+![Построенный график](docs/screenshots/graph.png)
 
 ---
 
