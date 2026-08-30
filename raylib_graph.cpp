@@ -1,6 +1,10 @@
 #include "raylib_graph.h"
-#include "raylib.h"
 #include "config.h"
+
+extern "C"
+{
+#include "raylib.h"
+}
 
 void show_graph_window(void)
 {
