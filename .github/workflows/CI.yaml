@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Clear
-        run: rm -rf ./*
-
       - name: Set up Clang
         uses: egor-tensin/setup-clang@v2
         with:
@@ -22,6 +19,7 @@ jobs:
 
       - name: Install Raylib
         run: |
+          pwd && ls
           sudo apt-get update && sudo apt-get install -y cmake git libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev libasound2-dev
 
           git clone --depth 1 https://github.com/raysan5/raylib.git
@@ -34,4 +32,4 @@ jobs:
           rm -rf raylib
 
       - name: Compile and run tests
-        run: ./compile.sh
+        run: pwd && ls && ./compile.sh
