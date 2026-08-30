@@ -16,8 +16,9 @@ struct CmdArgs
     int colors;
     int output_delay;
     int speech;
-    int graph;
     int ascii_arts;
+    int ascii_graph;
+    int graph_window;
 };
 
 /**

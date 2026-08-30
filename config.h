@@ -30,9 +30,11 @@
 #define DISABLE_COLORS_ARG "--disable-colors"
 #define DISABLE_OUTPUT_DELAY_ARG "--disable-output-delay"
 #define DISABLE_SPEECH_ARG "--disable-speech"
+#define DISABLE_ASCII_ARTS_ARG "--disable-ascii-arts"
+#define DISABLE_ASCII_GRAPH_ARG "--disable-ascii-graph"
+#define DISABLE_GRAPH_WINDOW_ARG "--disable-graph-window"
 #define DISABLE_GRAPH_ARG "--disable-graph"
-#define DISABLE_ASCII_ARTS "--disable-ascii-arts"
-#define DISABLE_ALL "--disable-all"
+#define DISABLE_ALL_ARG "--disable-all"
 // cmd args block end
 
 // file path block
@@ -64,6 +66,8 @@
 const size_t BUFFERSIZE = 100;
 const double EPSILON = 1e-6;
 const int MAX_POW = 2;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HIGHT = 800;
 
 /**
  * @brief Global variable with cmd args
