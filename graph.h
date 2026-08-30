@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include "solve_equation.h"
 
 const int X_AXIS_LEN = 80;   ///< Length of x-axis in characters
@@ -14,6 +17,27 @@ struct Point
 };
 
 /**
+ * @brief Calculate f(x) = ax^2 + bx + c
+ *
+ * This function calculate the functions f(x) = ax^2 + bx + c
+ * in point x
+ *
+ * @param x
+ * @param equation
+ * @return double function value at point x
+ */
+double f(double x, struct QuadraticEquation *equation);
+
+/**
+ * @brief Get the scale of axis using key point and axis length
+ *
+ * @param point
+ * @param axis_len
+ * @return double
+ */
+double get_scale(double point, int axis_len);
+
+/**
  * @brief Draw quadratic equation graph
  *
  * This function will draw quadratic equation graph.
@@ -22,3 +46,5 @@ struct Point
  * @param equation
  */
 void draw_quadratic_equation_graph(struct QuadraticEquation *equation);
+
+#endif // GRAPH_H
