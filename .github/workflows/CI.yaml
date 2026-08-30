@@ -17,8 +17,5 @@ jobs:
           version: latest
           platform: x64
 
-      - name: Set up OpenGL
-        run: sudo apt update && sudo apt install libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev
-
       - name: Compile and run tests
         run: ./compile.sh
