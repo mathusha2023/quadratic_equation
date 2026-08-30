@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clear
+        run: rm -rf ./*
+
       - name: Clone project
         uses: actions/checkout@v3
 
